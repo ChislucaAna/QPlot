@@ -1,4 +1,5 @@
 from Points import Punct
+from domain import Complex
 import math
 
 class Line:
@@ -9,9 +10,12 @@ class Line:
             self.p2 = p2
         else:
             raise TypeError("P1 si P2 TREBUIE SA FIE PUNCTE")
-
-    def lungime(self): # ab=rad((xa-xb)^2+(ya-yb)^2)
-        return math.sqrt((self.p2.x - self.p1.x)**2+(self.p2.y - self.p1.y)**2)
+    
+    def lungime(self):
+        ###cum se calculeaza asta cu nr complexe
+        diff_real = self.p2.x.real - self.p1.x.real
+        diff_imag = self.p2.x.imag - self.p1.x.imag
+        return abs(diff_real + diff_imag)
 
     def mijloc(self): #xm=(xa+xb)/2 ym=(xa+xb)/2
         return Punct((self.p1.x + self.p2.x) / 2, (self.p1.y + self.p2.y) / 2)

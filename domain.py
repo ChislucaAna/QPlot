@@ -10,9 +10,13 @@ class Complex:
     
     @staticmethod
     def from_string(s):
-        s = s.replace(" ", "").rstrip('i')
+        s = s.replace(" ", "").rstrip('ij')
         last_plus = s.rfind('+')
         last_minus = s.rfind('-')
+
+        if last_plus == -1 and last_minus == -1:
+            return real(s), 0
+
         split_pos = max(last_plus, last_minus)
         real_part = s[:split_pos]
         imag_part = s[split_pos:]
@@ -90,7 +94,7 @@ class Complex:
         #r e modulul numarului
         #iar t este unghiul pe care il face numarul cu axa Ox
         r = abs(self)
-        
+
         #functia asta returneaza unghiul in cadranul bun
         #chiar si pt puncte care nu is in -pi/2,pi/2
         #spre deosebire de atan are quadrant awareness

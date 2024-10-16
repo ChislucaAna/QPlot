@@ -1,4 +1,5 @@
 import math
+from domain import Complex
 
 class Punct:
     def __init__(self,x=0,y=0):
