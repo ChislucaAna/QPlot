@@ -41,8 +41,8 @@ class TestComplexOperationsWithReals(unittest.TestCase):
 
     def test_divide_real_and_complex(self):
         result = self.real_num / self.complex_num
-        expected_real = (self.real_num * self.complex_num.real) / (self.complex_num.real**2 + self.complex_num.imaginar**2)
-        expected_imag = (-self.real_num * self.complex_num.imaginar) / (self.complex_num.real**2 + self.complex_num.imaginar**2)
+        expected_real = (self.real_num * self.complex_num.real) / (self.complex_num.real**2 + self.complex_num.imag**2)
+        expected_imag = (-self.real_num * self.complex_num.imag) / (self.complex_num.real**2 + self.complex_num.imag**2)
         expected = Complex(expected_real, expected_imag)
         self.assertEqual(result, expected)
 

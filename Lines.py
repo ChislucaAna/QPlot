@@ -13,9 +13,9 @@ class Line:
     
     def lungime(self):
         ###cum se calculeaza asta cu nr complexe
-        diff_real = self.p2.x.real - self.p1.x.real
-        diff_imag = self.p2.x.imag - self.p1.x.imag
-        return abs(diff_real + diff_imag)
+        diff_x = self.p2.x - self.p1.x
+        diff_y = self.p2.y - self.p1.y
+        return (abs(diff_x)**2 + abs(diff_y)**2)**0.5
 
     def mijloc(self): #xm=(xa+xb)/2 ym=(xa+xb)/2
         return Punct((self.p1.x + self.p2.x) / 2, (self.p1.y + self.p2.y) / 2)

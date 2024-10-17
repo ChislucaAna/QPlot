@@ -19,25 +19,25 @@ class TestComplex(unittest.TestCase):
         """Test addition of complex numbers."""
         result = self.c1 + self.c2
         self.assertEqual(result.real, 4)
-        self.assertEqual(result.imaginar, 2)
+        self.assertEqual(result.imag, 2)
 
     def test_subtract(self):
         """Test subtraction of complex numbers."""
         result = self.c1 - self.c2
         self.assertEqual(result.real, 2)
-        self.assertEqual(result.imaginar, 6)
+        self.assertEqual(result.imag, 6)
 
     def test_multiply(self):
         """Test multiplication of complex numbers."""
         result = self.c1 * self.c2
         self.assertEqual(result.real, 11)  # (3*1 - 4*(-2)) = 3 + 8 = 11
-        self.assertEqual(result.imaginar, -2)  # (3*(-2) + 4*1) = -6 + 4 = -2
+        self.assertEqual(result.imag, -2)  # (3*(-2) + 4*1) = -6 + 4 = -2
 
     def test_divide(self):
         """Test division of complex numbers."""
         result = self.c1 / self.c2
         self.assertAlmostEqual(result.real, -1.0)  # (3*1 + 4*(-2)) / (1^2 + (-2)^2) = -5 / 5 = -1
-        self.assertAlmostEqual(result.imaginar, 2.0)  # (4*1 - 3*(-2)) / (1^2 + (-2)^2) = 4 + 6 / 5 = 2
+        self.assertAlmostEqual(result.imag, 2.0)  # (4*1 - 3*(-2)) / (1^2 + (-2)^2) = 4 + 6 / 5 = 2
 
     def test_divide_by_zero(self):
         """Test division by zero exception."""

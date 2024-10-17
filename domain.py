@@ -68,6 +68,8 @@ class Complex:
             if numitor != 0:
                 return Complex((self.real * other.real + self.imag * other.imag) / numitor,
                                (self.imag * other.real - self.real * other.imag) / numitor)
+            else:
+                raise(ZeroDivisionError)
         elif isinstance(other, (int, float)) and other != 0:
             return Complex(self.real / other, self.imag / other)
 
