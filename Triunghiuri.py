@@ -1,5 +1,6 @@
 import math
 from Points import Punct
+import matplotlib.pyplot as plt
 
 class Triunghi:
     def __init__(self, p1,p2,p3):
@@ -52,6 +53,25 @@ class Triunghi:
             return "dreptunghic"
         else:
             return "scalen"
+    
+    def plot(self):
+        x_coords = [self.p1.x, self.p2.x, self.p3.x, self.p1.x] 
+        y_coords = [self.p1.y, self.p2.y, self.p3.y, self.p1.y]
+        
+        plt.figure()
+        plt.plot(x_coords, y_coords, marker='o')  # Draw the triangle
+        
+        plt.text(self.p1.x, self.p1.y, 'P1', fontsize=12, ha='right')
+        plt.text(self.p2.x, self.p2.y, 'P2', fontsize=12, ha='right')
+        plt.text(self.p3.x, self.p3.y, 'P3', fontsize=12, ha='right')
+        
+        #pentru scalabilitatea reprezentarii
+        plt.xlim(min(x_coords) - 1, max(x_coords) + 1)
+        plt.ylim(min(y_coords) - 1, max(y_coords) + 1)
+        
+        plt.gca().set_aspect('equal', adjustable='box')  # Unitatea sa fie const pe axe
+        plt.grid(True)
+        plt.show()
 
 
 
