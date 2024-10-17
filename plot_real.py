@@ -14,8 +14,8 @@ plt.scatter(x_values, y_values, color='blue', marker='o')
 for point in points:
     plt.text(point[0], point[1], f'({point[0]}, {point[1]})')
 
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
+plt.xlabel('Axa Ox')
+plt.ylabel('Axa Oy')
 plt.title('Puncte in 2D')
 plt.grid()
 plt.show()
