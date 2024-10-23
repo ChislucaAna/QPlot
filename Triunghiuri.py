@@ -9,7 +9,7 @@ class Triunghi:
             self.p2 = p2
             self.p3 = p3 
         else:
-            raise TypeError("P1 si P2 TREBUIE SA FIE PUNCTE")
+            raise TypeError("P1 si P2 si P3 TREBUIE SA FIE PUNCTE")
 
     def lungime_laturi(self):
         diff_x = self.p2.x - self.p1.x
@@ -24,7 +24,7 @@ class Triunghi:
         diff_y = self.p3.y - self.p2.y
         p2p3= (abs(diff_x)**2 + abs(diff_y)**2)**0.5
 
-        return p1p2,p1p3,p2p3
+        return p1p2,p1p3,p2p3 #practic returneaza AB,AC,BC
     
     def perimetru(self):
         a,b,c = self.lungime_laturi()
@@ -53,6 +53,18 @@ class Triunghi:
             return "dreptunghic"
         else:
             return "scalen"
+
+    def get_angles(self): #folosind teorema cosinusului
+        #am precurtat notatia laturilor cu unghiul opus fiecareia
+        c,b,a=self.lungime_laturi()
+        A = math.acos((b**2 + c**2 - a**2) / (2 * b * c))
+        B = math.acos((a**2 + c**2 - b**2) / (2 * a * c))
+        C= math.acos((a**2 + b**2 - c**2) / (2 * a * b))
+        #alternativa A*180/math.pi pt conversia in grade
+        A = math.degrees(A)
+        B = math.degrees(B)
+        C = math.degrees(C)
+        return A,B,C
     
     def plot(self):
         x_coords = [self.p1.x, self.p2.x, self.p3.x, self.p1.x] 

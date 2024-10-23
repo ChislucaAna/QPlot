@@ -102,6 +102,16 @@ class TestTriunghi(unittest.TestCase):
         p12 = Punct(1, 2)  # Scalene triangle
         triunghi_scalen = Triunghi(p10, p11, p12)
         self.assertEqual(triunghi_scalen.tip_triunghi(), "isoscel")
+    
+    def test_individual_angles(self):
+        A = Punct(0, 0)
+        B = Punct(4, 0)
+        C = Punct(0, 3)
+        angles = Triunghi(A,B,C).get_angles()
+        #delta e marja de eroare acceptata de test case
+        self.assertAlmostEqual(angles[0], 90, delta=0.01)
+        self.assertAlmostEqual(angles[1], 36.87, delta=0.01)
+        self.assertAlmostEqual(angles[2], 53.13, delta=0.01)
 
 if __name__ == '__main__':
     unittest.main()
