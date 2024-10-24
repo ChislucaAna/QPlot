@@ -112,6 +112,32 @@ class TestTriunghi(unittest.TestCase):
         self.assertAlmostEqual(angles[0], 90, delta=0.01)
         self.assertAlmostEqual(angles[1], 36.87, delta=0.01)
         self.assertAlmostEqual(angles[2], 53.13, delta=0.01)
+    
+    def test_arii_egale_true(self):
+        t1 = Triunghi(Punct(0, 0), Punct(4, 0), Punct(0, 3))  # Area = 6
+        t2 = Triunghi(Punct(1, 1), Punct(5, 1), Punct(1, 4))  # Area = 6
+        
+        self.assertTrue(t1.arii_egale(t2))
+
+    def test_arii_egale_false(self):
+        t1 = Triunghi(Punct(0, 0), Punct(4, 0), Punct(0, 3))
+        t2 = Triunghi(Punct(0, 0), Punct(2, 0), Punct(0, 1))
+        
+        self.assertFalse(t1.arii_egale(t2))
+
+    def test_arii_egale_invalid_type(self):
+        t1 = Triunghi(Punct(0, 0), Punct(4, 0), Punct(0, 3))
+        non_triangle = "Not a triangle"
+        
+        with self.assertRaises(TypeError):
+            t1.arii_egale(non_triangle)
+        
+    def test_collinear_points(self):
+        p1 = Punct(0, 0)
+        p2 = Punct(2, 2)
+        p3 = Punct(4, 4) 
+        with self.assertRaises(ValueError):
+            triangle = Triunghi(p1, p2, p3)
 
 if __name__ == '__main__':
     unittest.main()

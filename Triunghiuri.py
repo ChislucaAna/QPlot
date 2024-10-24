@@ -1,15 +1,24 @@
 import math
 from Points import Punct
 import matplotlib.pyplot as plt
+from Angles import Angle
+from Lines import Line
 
 class Triunghi:
     def __init__(self, p1,p2,p3):
         if isinstance(p1, Punct) and isinstance(p2, Punct) and isinstance(p3,Punct):
             self.p1 = p1
             self.p2 = p2
-            self.p3 = p3 
+            self.p3 = p3
+
+            if not self.is_valid_triangle():
+                raise ValueError("The points do not form a valid triangle.")
         else:
             raise TypeError("P1 si P2 si P3 TREBUIE SA FIE PUNCTE")
+
+    def is_valid_triangle(self):
+        a, b, c = self.lungime_laturi()
+        return a + b > c and a + c > b and b + c > a
 
     def lungime_laturi(self):
         diff_x = self.p2.x - self.p1.x
@@ -84,6 +93,27 @@ class Triunghi:
         plt.gca().set_aspect('equal', adjustable='box')  # Unitatea sa fie const pe axe
         plt.grid(True)
         plt.show()
+    
+    def arii_egale(self,other):
+        if(isinstance(other,Triunghi)):
+            if(math.isclose(self.arie(),other.arie())):
+                return True
+            else:
+                return False
+        else:
+            raise TypeError("Parametrul functiei trebuie sa fie triunghi.")
+    
+    def get_centru_circumscris(self): #AICI AI INCA PROBLEME
+        #se afla a intersectia mediatoarelor triunghiului
+        #o mediatoare este formata din mijlocul unei laturi
+        #si varful opus acesteia
+        AB =  Line(self.p1,self.p2)
+        BC= Line(self.p2,self.p3)
+        M = AB.mijloc() #mijlocul lui AB
+        N= BC.mijloc() #mijlocul lui BC
+        mediatoarea_lui_AB =Line(self.p3,M)
+        mediatoarea_lui_BC=Line(self.p1,N)
+        return mediatoarea_lui_AB.intersectie(BC)
 
 
 
