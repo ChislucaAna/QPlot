@@ -30,33 +30,61 @@ class Line:
         return math.atan(self.panta())
 
     def intersectie(self, other):
+        # Verificăm dacă prima linie este verticală
+        if self.p1.x == self.p2.x:  # Line 1 is vertical
+            x_intersect = self.p1.x
+            if other.p1.x == other.p2.x:  # Line 2 is also vertical
+                return None  # Both lines are vertical and parallel
+            else:
+                # Calculate slope of the second line
+                a2 = (other.p2.y - other.p1.y) / (other.p2.x - other.p1.x)
+                b2 = other.p1.y - a2 * other.p1.x
+                # Calculate intersection y-coordinate
+                y_intersect = a2 * x_intersect + b2
+                return Punct(x_intersect, y_intersect)
+
+        # Verificăm dacă a doua linie este verticală
+        if other.p1.x == other.p2.x:  # Line 2 is vertical
+            x_intersect = other.p1.x
+            a1 = (self.p2.y - self.p1.y) / (self.p2.x - self.p1.x)
+            b1 = self.p1.y - a1 * self.p1.x
+            # Calculate intersection y-coordinate
+            y_intersect = a1 * x_intersect + b1
+            return Punct(x_intersect, y_intersect)
+
         # Calculăm panta pentru fiecare dreaptă
-        a1 = (self.p2.y - self.p1.y) / (self.p2.x - self.p1.x)
-        a2 = (other.p2.y - other.p1.y) / (other.p2.x - other.p1.x)
-        
+        delta_x1 = self.p2.x - self.p1.x
+        delta_y1 = self.p2.y - self.p1.y
+        delta_x2 = other.p2.x - other.p1.x
+        delta_y2 = other.p2.y - other.p1.y
+
+        # Check for potential division by zero in slope calculation
+        if delta_x1 == 0 or delta_x2 == 0:
+            return None  # One of the lines is vertical, already handled above
+
+        a1 = delta_y1 / delta_x1
+        a2 = delta_y2 / delta_x2
+
         # Verificăm dacă dreptele sunt paralele (au aceeași pantă)
-        if a1 == a2:
+        if math.isclose(a1, a2, abs_tol=1e-9):
             return None  # Dreptele paralele nu se intersectează
-        
+
         # ax+b=y -ecuatia generala
-        #in particular :a*x_dat+b=y_dat
-        #=>b=y_dat-a*x_dat
         b1 = self.p1.y - a1 * self.p1.x
         b2 = other.p1.y - a2 * other.p1.x
-        
-        #obtinem sist
-        #1. a1*x_intersect+b1=y_intersect
-        #2. a2*x_intersect+b2=y_intersect
-        #scadem cele doua ecuatii si scoatem x
+
+        # Obtinem sist
+        # 1. a1*x_intersect+b1=y_intersect
+        # 2. a2*x_intersect+b2=y_intersect
+        # Scadem cele doua ecuatii si scoatem x
         x_intersect = (b2 - b1) / (a1 - a2)
-        
+
         # Calculăm coordonata y a punctului de intersecție
-        #incluind in prima ecuatie
+        # Incluind in prima ecuatie
         y_intersect = a1 * x_intersect + b1
-        
+
         # Returnăm punctul de intersecție sub forma unui obiect Punct
         return Punct(x_intersect, y_intersect)
-
 
     def perpendiculara_din_origine(self):
         panta = self.panta()
