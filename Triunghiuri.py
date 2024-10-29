@@ -102,18 +102,74 @@ class Triunghi:
                 return False
         else:
             raise TypeError("Parametrul functiei trebuie sa fie triunghi.")
+
+    def get_centru_circumscris(self):
+        #calculezi mijloacele a doua dintre laturi
+        M_AB = Line(self.p1, self.p2).mijloc() 
+        M_BC = Line(self.p2, self.p3).mijloc()
+
+        #calculezi pantele acestpr laturi pentru a determina
+        #perpendicularele corespunzatoare lor
+        slope_AB=Line(self.p1,self.p2).panta()
+        slope_BC=Line(self.p2,self.p3).panta()
+
+        #calculezi pantele perpendicularelor
+        #pe cele 2 laturi
+        if slope_AB!=0:
+            slope_perpendicular_AB = -1 / slope_AB
+        else:
+            slope_perpendicular_AB = None
+
+        if slope_BC!=0:
+            slope_perpendicular_BC = -1 / slope_BC
+        else:
+            slope_perpendicular_BC = None 
+        
+        #CLasa Line accepta doar 2 puncte ca mod de contructiei a dreptei
+        # a dreptei. DEci vei gasi un punct pe perpendiculara
+        #is vei defini mediatoarea ca punct gasit->punct de mijloc
+
+        if slope_perpendicular_AB is not None:
+            if slope_perpendicular_AB == 0:
+                p2_perpendicular_AB = Punct(M_AB.x + 1, M_AB.y)
+            else:
+                p2_perpendicular_AB = Punct(M_AB.x + 1, M_AB.y + slope_perpendicular_AB)
+
+            mediatoarea_AB = Line(M_AB, p2_perpendicular_AB)
+        else:
+            mediatoarea_AB = Line(M_AB, Punct(M_AB.x, M_AB.y + 1))
+
+        if slope_perpendicular_BC is not None:
+            if slope_perpendicular_BC == 0:
+                p2_perpendicular_BC = Punct(M_BC.x + 1, M_BC.y)  # Move horizontally
+            else:
+                p2_perpendicular_BC = Punct(M_BC.x + 1, M_BC.y + slope_perpendicular_BC)
+
+            mediatoarea_BC = Line(M_BC, p2_perpendicular_BC)
+        else:
+            mediatoarea_BC = Line(M_BC, Punct(M_BC.x, M_BC.y + 1))
+
+        #gasesti intersectia mediatoarelor
+        circumcenter = mediatoarea_AB.intersectie(mediatoarea_BC)
+        return circumcenter
+
+    def get_centru_inscris(self): #DEMONSTREAZA FORMULA
+        c,b,a=self.lungime_laturi()
+        x = (a * self.p1.x + b * self.p2.x + c * self.p3.x)/(a+b+c)
+        y = (a * self.p1.y + b * self.p2.y + c * self.p3.y)/(a+b+c)
+        print(a * self.p1.y + b * self.p2.y + c * self.p3.y)
+        return x,y
     
-    def get_centru_circumscris(self): #AICI AI INCA PROBLEME
-        #se afla a intersectia mediatoarelor triunghiului
-        #o mediatoare este formata din mijlocul unei laturi
-        #si varful opus acesteia
-        AB =  Line(self.p1,self.p2)
-        BC= Line(self.p2,self.p3)
-        M = AB.mijloc() #mijlocul lui AB
-        N= BC.mijloc() #mijlocul lui BC
-        mediatoarea_lui_AB =Line(self.p3,M)
-        mediatoarea_lui_BC=Line(self.p1,N)
-        return mediatoarea_lui_AB.intersectie(BC)
+    def inmultire_cu_scalar(self): #aria se modifica cu k**2
+        aria_initiala = self.aria()
+        
+        new_p1 = Punct(self.p1.x * k, self.p1.y * k)
+        new_p2 = Punct(self.p2.x * k, self.p2.y * k)
+        new_p3 = Punct(self.p3.x * k, self.p3.y * k)
+
+        new_triangle = Triunghi(new_p1, new_p2, new_p3)
+        
+        return new_triangle
 
 
 

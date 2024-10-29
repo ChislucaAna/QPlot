@@ -20,72 +20,49 @@ class Line:
     def mijloc(self): #xm=(xa+xb)/2 ym=(xa+xb)/2
         return Punct((self.p1.x + self.p2.x) / 2, (self.p1.y + self.p2.y) / 2)
 
-    def panta(self):#mAB=(yA-yB)/(xA-xB) ecuatia dreptei prin doua pct
-        try:
-            return (self.p2.y - self.p1.y) / (self.p2.x - self.p1.x)
-        except ZeroDivisionError:
-            return float('inf')
+    def panta(self):
+        if self.p2.x == self.p1.x:  # Vertical line
+            return None
+        return (self.p2.y - self.p1.y) / (self.p2.x - self.p1.x)
+    
+
+    def intercept(self): #il gaseste pe n unde y=mx+n
+        if self.panta() is None:  # Vertical line
+            return None
+        return self.p1.y - self.panta() * self.p1.x
 
     def unghiul_cu_axa_ox(self):#unghiul cu aza ox e arcangenta pantei
         return math.atan(self.panta())
 
+    def mediatoare(self):
+        M = self.mijloc()
+        slope = self.panta()
+        if slope is None:  # Vertical line becomes horizontal
+            return Line(M, Punct(M.x + 1, M.y))  # Horizontal line through M
+        # Perpendicular slope
+        perpendicular_slope = -1 / slope
+        intercept = M.y - perpendicular_slope * M.x
+        return Line(M, Punct(M.x + 1, perpendicular_slope * (M.x + 1) + intercept))
+
     def intersectie(self, other):
-        # Verificăm dacă prima linie este verticală
-        if self.p1.x == self.p2.x:  # Line 1 is vertical
-            x_intersect = self.p1.x
-            if other.p1.x == other.p2.x:  # Line 2 is also vertical
-                return None  # Both lines are vertical and parallel
-            else:
-                # Calculate slope of the second line
-                a2 = (other.p2.y - other.p1.y) / (other.p2.x - other.p1.x)
-                b2 = other.p1.y - a2 * other.p1.x
-                # Calculate intersection y-coordinate
-                y_intersect = a2 * x_intersect + b2
-                return Punct(x_intersect, y_intersect)
+        m1, b1 = self.panta(), self.intercept()
+        m2, b2 = other.panta(), other.intercept()
 
-        # Verificăm dacă a doua linie este verticală
-        if other.p1.x == other.p2.x:  # Line 2 is vertical
-            x_intersect = other.p1.x
-            a1 = (self.p2.y - self.p1.y) / (self.p2.x - self.p1.x)
-            b1 = self.p1.y - a1 * self.p1.x
-            # Calculate intersection y-coordinate
-            y_intersect = a1 * x_intersect + b1
-            return Punct(x_intersect, y_intersect)
+        if m1 == m2:  # Parallel lines
+            return None
+        
+        if m1 is None:  # self is a vertical line
+            x = self.p1.x
+            y = m2 * x + b2
+        elif m2 is None:  # other is a vertical line
+            x = other.p1.x
+            y = m1 * x + b1
+        else:  # Standard intersection
+            x = (b2 - b1) / (m1 - m2)
+            y = m1 * x + b1
 
-        # Calculăm panta pentru fiecare dreaptă
-        delta_x1 = self.p2.x - self.p1.x
-        delta_y1 = self.p2.y - self.p1.y
-        delta_x2 = other.p2.x - other.p1.x
-        delta_y2 = other.p2.y - other.p1.y
-
-        # Check for potential division by zero in slope calculation
-        if delta_x1 == 0 or delta_x2 == 0:
-            return None  # One of the lines is vertical, already handled above
-
-        a1 = delta_y1 / delta_x1
-        a2 = delta_y2 / delta_x2
-
-        # Verificăm dacă dreptele sunt paralele (au aceeași pantă)
-        if math.isclose(a1, a2, abs_tol=1e-9):
-            return None  # Dreptele paralele nu se intersectează
-
-        # ax+b=y -ecuatia generala
-        b1 = self.p1.y - a1 * self.p1.x
-        b2 = other.p1.y - a2 * other.p1.x
-
-        # Obtinem sist
-        # 1. a1*x_intersect+b1=y_intersect
-        # 2. a2*x_intersect+b2=y_intersect
-        # Scadem cele doua ecuatii si scoatem x
-        x_intersect = (b2 - b1) / (a1 - a2)
-
-        # Calculăm coordonata y a punctului de intersecție
-        # Incluind in prima ecuatie
-        y_intersect = a1 * x_intersect + b1
-
-        # Returnăm punctul de intersecție sub forma unui obiect Punct
-        return Punct(x_intersect, y_intersect)
-
+        return Punct(x, y)
+    
     def perpendiculara_din_origine(self):
         panta = self.panta()
         if panta == 0:
