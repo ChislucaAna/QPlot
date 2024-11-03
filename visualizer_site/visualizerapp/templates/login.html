@@ -1,3 +1,4 @@
+<!--login form-->
 {% extends 'base.html' %}
 
 {% load static %}
@@ -8,6 +9,8 @@
 <div class="flex items-center justify-center z-10 bg-gray-100 min-h-screen">
     <section class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
         <h2 class="text-center text-3xl font-extrabold text-gray-900">Log in</h2>
+
+        <!--FORMULARUL DE LOGIN-->
         <form method="post" class="space-y-6">
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -30,11 +33,22 @@
             </button>
         </form>
 
-        {% if form.errors %}
-            <div class="mt-4 text-center text-red-600">
-                <p>Invalid username or password.</p>
+        <!--ERROR HANDLING-->
+        {% if form.non_field_errors %}
+            <div class="error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
             </div>
         {% endif %}
+        {% if field.errors %}
+        <div class="error">
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
 
         <!-- Sign Up Link Section -->
         <div class="text-center mt-6">
