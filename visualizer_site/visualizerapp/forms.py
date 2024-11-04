@@ -1,5 +1,6 @@
 # formulare pt creearea de noi plotturi
 from django import forms
+from .models.Points import Punct
 
 class PointForm(forms.Form):
     x = forms.FloatField(label='X Coordinate')
