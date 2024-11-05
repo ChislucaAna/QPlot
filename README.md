@@ -2,7 +2,6 @@
 
 QPlot is a web application developed using Django that allows users to plot various geometric elements, including points, lines, triangles, and other polygons. With an intuitive interface, users can create, visualize, and manage their geometric plots seamlessly. The app also offers user accounts, enabling the option to save plots either to a personal account or locally.
 
-QPlot Screenshot <!-- Add a link to a screenshot here if available -->
 ✨ Features
 
     Geometric Plotting: Create plots with points, lines, triangles, and polygons.
@@ -29,44 +28,32 @@ To run QPlot locally, ensure the following packages are installed in your virtua
 
 Install dependencies with:
 
-bash
-
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 🛠 Installation
 
-    Clone this repository:
+Clone this repository:
 
-    bash
-
-git clone https://github.com/yourusername/qplot.git
+    git clone https://github.com/yourusername/qplot.git
 
 Create and activate a virtual environment:
 
-bash
-
-python -m venv env
-source env/bin/activate  # On Windows use `env\Scripts\activate`
+    python -m venv env
+    source env/bin/activate  # On Windows use `env\Scripts\activate`
 
 Install the required packages:
 
-bash
-
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 Run migrations:
 
-bash
-
-python manage.py migrate
+    python manage.py migrate
 
 Start the Django development server:
 
-bash
-
     python manage.py runserver
 
-    Open your browser and navigate to http://127.0.0.1:8000 to start using QPlot!
+Open your browser and navigate to http://127.0.0.1:8000 to start using QPlot!
 
 🚀 Usage
 
@@ -76,4 +63,4 @@ bash
 
 🤝 Contributing
 
-We welcome contributions to enhance QPlot! Please fork this repository, make your changes, and submit a pull request
+I welcome contributions to enhance QPlot! Please fork this repository, make your changes, and submit a pull request
