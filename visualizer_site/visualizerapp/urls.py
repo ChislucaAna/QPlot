@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import index,home,signup,plot_view,dashboard
 from django.contrib.auth import views as auth_views
+from .views.homepage import home
+from .views.dashboard import dashboard
+from .views.signup import signup
+from .views.plotter import plot_view
 
 urlpatterns = [
     path('', home, name='home'),
