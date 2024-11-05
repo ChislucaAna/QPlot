@@ -1,59 +1,73 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
+from django.views import View
 import matplotlib
-matplotlib.use('Agg') #fixing:
-#UserWarning: Starting a Matplotlib GUI outside 
-#of the main thread will likely fail.
-import matplotlib.pyplot as plt #modulul pt plotting
-#io allows us to create a buffer to store the image
-#without creating a file, that we then encode into a base64
-#string, that we will include in the src attribute for img
+matplotlib.use('Agg')  # Fixing: UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
+import matplotlib.pyplot as plt  # Modulul pt plotting
 import io
 import base64
 
-#forms for creating new geometric plots:
-from visualizerapp.forms import PointForm
+# Forms for creating new geometric plots:
+from visualizerapp.forms import PointForm, TriangleForm  # Assuming TriangleForm is defined in forms.py
 
-#storage variabes for geometric elements 
+# Storage variables for geometric elements 
 points = []
+plot_url=None
 
+class PlotView(View):
+    def get(self, request, *args, **kwargs):
+        global plot_url
+        form = PointForm()  # Creating new instance of PointForm
+        triangle_form = TriangleForm()  # Creating new instance of TriangleForm
+        context = {
+            'form': form,  # Form object for creating points
+            'triangle_form': triangle_form,  # Form object for creating triangles
+            'plot_url': plot_url,  # URL for the img (null initially)
+            'points': points,  # List of points created so far
+        }
+        return render(request, 'plotter.html', context)
 
-def plot_view(request):
-    global points #refferencing the global var
-    plot_url = None #new variable for storing fututre img url
-    form = PointForm()#creating new instance of pointform
+    def post(self, request, *args, **kwargs):
+        global plot_url
+        global points  # Referencing the global var
+        form=PointForm()
 
-    if request.method == 'POST':
         if 'add_point' in request.POST:  # Add point button was clicked
             form = PointForm(request.POST)
             if form.is_valid():
-                #django forms validate data automatically and it is added to cleaned_data
+                # Django forms validate data automatically and it is added to cleaned_data
                 x = form.cleaned_data['x']
                 y = form.cleaned_data['y']
-                points.append((x, y)) #add to variable
-        elif 'plot' in request.POST:  # Plot button was clicked
-            plt.figure(figsize=(6, 4)) #canvas size in inches
-            if points:
-                xs, ys = zip(*points)  # Separate x and y values
-                #plottinf points
-                plt.scatter(xs, ys, color='blue')
-                #pentru a uni punctele:
-                #plt.plot(xs, ys, color='gray', linestyle='--')
-            plt.title("Plot of Points")
-            plt.xlabel("X")
-            plt.ylabel("Y")
-            
-            buf = io.BytesIO() #create buffer
-            plt.savefig(buf, format='png')#saving the image into bugger
-            buf.seek(0) #we go back to beggining of the stream
-            plot_url = base64.b64encode(buf.read()).decode('utf-8')
-            #DATA FLOW:
-            #binarydata->byes object(base 64-ASCII)->text
-            buf.close()
-            plt.close()
+                points.append((x, y))  # Add to variable
+                #return redirect('plotter')  # Redirect to the same view to show updated points
 
-    context = {
-        'form': form,#form object for creating points
-        'plot_url': plot_url, #url for the img(null initially)
-        'points': points, #list of points created so far
-    }
-    return render(request, 'plotter.html', context)
+        elif 'plot' in request.POST:  # Plot button was clicked
+            plot_url = self.plot_points()  # Call to plot points
+
+        context = {
+            'form': form,  # Form object for creating points
+            'plot_url': plot_url,  # URL for the img (could be set now)
+            'points': points,  # List of points created so far
+        }
+        return render(request, 'plotter.html', context)
+
+    def plot_points(self):
+        plt.figure(figsize=(6, 4))  # Canvas size in inches
+        if points:
+            xs, ys = zip(*points)  # Separate x and y values
+            # Plotting points
+            plt.scatter(xs, ys, color='blue')
+            # Uncomment to connect points:
+            # plt.plot(xs, ys, color='gray', linestyle='--')
+        plt.title("Plot of Points")
+        plt.xlabel("X")
+        plt.ylabel("Y")
+
+        buf = io.BytesIO()  # Create buffer
+        plt.savefig(buf, format='png')  # Saving the image into buffer
+        buf.seek(0)  # We go back to the beginning of the stream
+        plot_url = base64.b64encode(buf.read()).decode('utf-8')
+        # DATA FLOW:
+        # binary data -> bytes object (base 64-ASCII) -> text
+        buf.close()
+        plt.close()
+        return plot_url
