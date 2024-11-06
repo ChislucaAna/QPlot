@@ -1,0 +1,23 @@
+<div class="container mx-auto p-6">
+    <div class="flex justify-between">
+        <!-- Form Section -->
+        <div class="form-container w-1/2 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-2">Add a Line</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ line_form.as_p }}
+                <div class="flex space-x-4">
+                    <button type="submit" name="add_line" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Line</button>
+                </div>
+            </form>
+            <h3 class="text-lg font-semibold mb-2">Lines Added:</h3>
+            <ul class="list-disc pl-5">
+                {% for l in lines %}
+                    <li class="flex items-center space-x-2">
+                        <span>({{ l.p1 }}, {{ l.p2 }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

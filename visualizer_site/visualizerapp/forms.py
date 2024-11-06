@@ -7,5 +7,7 @@ class PointForm(forms.Form):
     y = forms.FloatField(label='Y Coordinate')
 
 class LineForm(forms.Form):
-    A = forms.FloatField(label='Frist Point')
-    B = forms.FloatField(label='Second Point')
+    x1 = forms.FloatField(label='X Coordinate of First Point')
+    y1 = forms.FloatField(label='Y Coordinate of First Point')
+    x2 = forms.FloatField(label='X Coordinate of Second Point')
+    y2 = forms.FloatField(label='Y Coordinate of Second Point')
