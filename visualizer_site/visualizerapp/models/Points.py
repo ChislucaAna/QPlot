@@ -31,11 +31,3 @@ class Punct:
 
     def get_angle(self):
         return((math.atan(self.y/self.x)*180.0)/math.pi)
-
-scalar=2
-c1 = Punct(3,4)
-c2=Punct(1,2)
-#print(c1*2)
-print(2*c1)
-print(abs(c1))
-print(c1.get_angle())

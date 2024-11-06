@@ -8,13 +8,21 @@
                 {{ point_form.as_p }}
                 <div class="flex space-x-4">
                     <button type="submit" name="add_point" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Point</button>
+                    
+                    <button 
+                    type="submit" 
+                    name="connect_points" 
+                    class="py-2 px-4 rounded hover:bg-blue-600 
+                           {% if is_checked %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    Connect Points
+                    </button>
                 </div>
             </form>
             <h3 class="text-lg font-semibold mb-2">Points Added:</h3>
             <ul class="list-disc pl-5">
-                {% for x, y in points %}
+                {% for p in points %}
                     <li class="flex items-center space-x-2">
-                        <span>({{ x }}, {{ y }})</span>
+                        <span>({{ p.x }}, {{ p.y }})</span>
                     </li>
                 {% endfor %}
             </ul>

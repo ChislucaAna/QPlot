@@ -7,16 +7,20 @@ import io
 import base64
 # Forms for creating geometric elements
 from visualizerapp.forms import PointForm, LineForm
+from visualizerapp.models.Points import Punct
 
 # Storage variables for geometric elements 
 points = []
 plot_url=None
+is_checked=False
 
 class PlotView(View):
     def get(self, request, *args, **kwargs):
         global plot_url
+        global is_checked
         point_form=PointForm()
         context = {
+            'is_checked':is_checked,
             'point_form': point_form, 
             'plot_url': plot_url,  # URL for the img (null initially)
             'points': points,  # List of points created so far
@@ -26,20 +30,25 @@ class PlotView(View):
     def post(self, request, *args, **kwargs):
         global plot_url
         global points
+        global is_checked
         point_form=PointForm()
 
-        if 'add_point' in request.POST:  # Add point button was clicked
+        if 'connect_points' in request.POST:
+            is_checked = not is_checked
+
+        elif 'add_point' in request.POST:  # Add point button was clicked
             point_form = PointForm(request.POST)
             if point_form.is_valid():
                 # Django forms validate data automatically and it is added to cleaned_data
                 x = point_form.cleaned_data['x']
                 y = point_form.cleaned_data['y']
-                points.append((x, y))  # Add to variable
+                points.append(Punct(x, y))  # Add to variable
 
         elif 'plot' in request.POST:  # Plot button was clicked
             plot_url = self.plot_all()
 
         context = {
+            'is_checked':is_checked,
             'point_form': point_form,  # Form object for creating points
             'plot_url': plot_url,  # URL for the img (null initially)
             'points': points,  # List of points created so far
@@ -47,13 +56,15 @@ class PlotView(View):
         return render(request, 'plotter.html', context)
 
     def plot_all(self):
+        global is_checked
         plt.figure(figsize=(6, 4))  # Canvas size in inches
         if points:
-            xs, ys = zip(*points)  # Separate x and y values
-            # Plotting points
-            plt.scatter(xs, ys, color='blue')
-            # Uncomment to connect points:
-            # plt.plot(xs, ys, color='gray', linestyle='--')
+            for p in points:
+                plt.scatter(p.x, p.y, color='blue')
+            if is_checked:
+                xs = [p.x for p in points]  # Get all x values
+                ys = [p.y for p in points]  # Get all y values
+                plt.plot(xs, ys, color='gray', linestyle='--')
         plt.xlabel("X")
         plt.ylabel("Y")
 
