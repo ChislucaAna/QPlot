@@ -2,6 +2,7 @@
 
 QPlot is a web application developed using Django that allows users to plot various geometric elements, including points, lines, triangles, and other polygons. With an intuitive interface, users can create, visualize, and manage their geometric plots seamlessly. The app also offers user accounts, enabling the option to save plots either to a personal account or locally.
 ![image](https://github.com/user-attachments/assets/e42322e6-ddb0-40ea-b2fa-102e9491f199)
+![image](https://github.com/user-attachments/assets/136eb181-46c4-42a4-9170-247968ccedbc)
 ![image](https://github.com/user-attachments/assets/91c80f2b-e23a-4b90-9c19-1112be55d4ac)
 ![image](https://github.com/user-attachments/assets/07899f00-2482-4b56-95c7-53ec722ef31f)
 ![image](https://github.com/user-attachments/assets/3f97ef7d-1855-4367-a8f4-110bf4a27ffa)
