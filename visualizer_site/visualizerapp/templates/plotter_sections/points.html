@@ -1,33 +1,23 @@
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-4">Point Plotter</h1>
     <div class="flex justify-between">
         <!-- Form Section -->
         <div class="form-container w-1/2 bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-2">Add a Point</h2>
             <form method="post" class="mb-4">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ point_form.as_p }}
                 <div class="flex space-x-4">
                     <button type="submit" name="add_point" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Point</button>
-                    <button type="submit" name="plot" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Plot</button>
                 </div>
             </form>
             <h3 class="text-lg font-semibold mb-2">Points Added:</h3>
             <ul class="list-disc pl-5">
                 {% for x, y in points %}
-                    <li>({{ x }}, {{ y }})</li>
+                    <li class="flex items-center space-x-2">
+                        <span>({{ x }}, {{ y }})</span>
+                    </li>
                 {% endfor %}
             </ul>
-        </div>
-        
-        <!-- Plot Section -->
-        <div class="plot-container w-1/2 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-2">Plot</h2>
-            {% if plot_url %}
-                <img class="max-w-full h-auto" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
-            {% else %}
-                <p class="text-gray-500">No plot available. Add points and click "Plot" to generate one.</p>
-            {% endif %}
         </div>
     </div>
 </div>
