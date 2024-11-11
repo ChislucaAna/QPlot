@@ -1,0 +1,58 @@
+<div class="container p-6 w-full">
+    <div class="flex justify-between w-full">
+        <!-- Form Section -->
+        <div class="form-container bg-white p-6 rounded-lg shadow-md w-full">
+            <h2 class="text-xl font-semibold mb-2">Add a Line</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ line_form.as_p }}
+                <br>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit" name="add_line" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Line</button>
+
+                    <button 
+                    type="submit" 
+                    name="show_middles" 
+                    class="py-2 px-4 rounded hover:bg-blue-600 
+                           {% if show_middles %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    Show middle points
+                    </button>
+
+                    <button 
+                    type="submit" 
+                    name="show_intersection" 
+                    class="py-2 px-4 rounded hover:bg-blue-600 
+                           {% if show_intersection %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    Show intersection points
+                    </button>
+
+                </div>
+                <br>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit" name="calculate_length" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Calculate length</button>
+                    <button type="submit" name="calculate_slope" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Calculate slope</button>
+
+                </div>
+                <br>
+
+                <!-- Plot Button -->
+                <div class="flex justify-center w-full">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" name="plot_lines" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Plot lines</button>
+                    </form>
+                </div>
+                
+            </form>
+            <h3 class="text-lg font-semibold mb-2">Lines Added:</h3>
+            <ul class="list-disc pl-5">
+                {% for l in lines %}
+                    <li class="flex items-center space-x-2">
+                        <span>({{ l.p1.x }}, {{ l.p1.y }}), ({{ l.p2.x }}, {{ l.p2.y }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

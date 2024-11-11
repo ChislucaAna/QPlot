@@ -1,0 +1,54 @@
+<div class="container p-6 w-full">
+    <div class="flex justify-between w-full">
+        <!-- Form Section -->
+        <div class="form-container bg-white p-6 rounded-lg shadow-md w-full">
+            <h2 class="text-xl font-semibold mb-2">Add a Point</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ point_form.as_p }}
+                <br>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit" name="add_point" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Point</button>
+                    
+                    <button 
+                    type="submit" 
+                    name="connect_points" 
+                    class="py-2 px-4 rounded hover:bg-blue-600 
+                           {% if connect_points %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    Connect points
+                    </button>
+                </div>
+                <br>
+                <!-- Plot Button -->
+                <div class="flex justify-center w-full">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" name="plot_points" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Plot points</button>
+                    </form>
+                </div>
+            </form>
+            <h3 class="text-lg font-semibold mb-2">Points Added:</h3>
+            <ul class="list-disc pl-5">
+                {% for p in points %}
+                    <li class="flex items-center space-x-2">
+                        <span>({{ p.x }}, {{ p.y }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    input {
+    border: 0.1px solid #535353;
+    border-radius: 8px; 
+    padding:2px;
+    margin:2px;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+</style>

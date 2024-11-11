@@ -1,0 +1,70 @@
+<!--signup form(create  new acc)-->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <section class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Sign Up</h2>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+            <div class="space-y-1">
+                {{ field.label_tag }}
+                <div>
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <p class="text-red-600 text-sm">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                class="w-full py-3 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                Sign Up
+            </button>
+        </form>
+        <div class="text-center mt-6">
+            <p class="text-gray-600">Already have an account?</p>
+            <a href="{% url 'login' %}"
+               class="text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+               Log in
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+    body {
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        overflow: hidden;
+    }
+    input {
+        border: 2px solid #D1D5DB;
+        border-radius: 10px;
+        padding: 5px;
+        width: 100%;
+        background-color: #F9FAFB;
+        font-size: 16px;
+        color: #111827;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    input:focus {
+        border-color: #6366F1;
+        background-color: #FFFFFF;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+    input:hover {
+        border-color: #6366F1;
+    }
+    input::placeholder {
+        color: #9CA3AF;
+        opacity: 1;
+    }
+</style>
+{% endblock %}

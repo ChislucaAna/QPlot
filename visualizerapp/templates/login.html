@@ -1,0 +1,95 @@
+<!--login form-->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center z-10 bg-gray-100 min-h-screen">
+    <section class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
+        <h2 class="text-center text-3xl font-extrabold text-gray-900">Log in</h2>
+
+        <!--FORMULARUL DE LOGIN-->
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+            <div class="space-y-1">
+                {{ field.label_tag }}
+                <div>
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <p class="text-red-600 text-sm">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                Submit
+            </button>
+        </form>
+
+        <!--ERROR HANDLING-->
+        {% if form.non_field_errors %}
+            <div class="error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if field.errors %}
+        <div class="error">
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+        <!-- Sign Up Link Section -->
+        <div class="text-center mt-6">
+            <p class="text-gray-600">Don't have an account?</p>
+            <a href="{% url 'signup' %}"
+               class="text-indigo-600 font-medium hover:text-indigo-500 transition duration-150 ease-in-out">
+               Create one now!
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+    body {
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        overflow: hidden;
+    }
+    input {
+        border: 2px solid #D1D5DB;
+        border-radius: 10px;
+        padding: 5px;
+        width: 100%;
+        background-color: #F9FAFB;
+        font-size: 16px;
+        color: #111827;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    input:focus {
+        border-color: #6366F1;
+        background-color: #FFFFFF;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+    input:hover {
+        border-color: #6366F1;
+    }
+    input::placeholder {
+        color: #9CA3AF;
+        opacity: 1;
+    }
+</style>
+{% endblock %}
