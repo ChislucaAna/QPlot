@@ -53,7 +53,7 @@
         <!-- Mobile menu, show/hide based on menu state -->
         <div class="lg:hidden hidden" id="mobile-menu" role="dialog" aria-modal="true">
             <div class="fixed inset-0 z-50"></div>
-            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#191414] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#191414] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 side_menu">
                 <div class="flex items-center justify-between">
                     <a class="-m-1.5 p-1.5 text-lg font-bold leading-6">QPlot</a>
                     <button id="mobile-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
@@ -108,13 +108,17 @@
 
     <style>
         body{
-            background-color: #121212;
             background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(18,18,18,1) 74%, rgba(5,65,26,1) 100%);
             font-family: Arial, Helvetica, sans-serif;
         }
 
         a{
             color: whitesmoke;
+        }
+
+        .side_menu
+        {
+            background-color: rgb(11,11,11);
         }
     </style>
 </body>

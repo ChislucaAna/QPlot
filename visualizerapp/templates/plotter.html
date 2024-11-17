@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class=>
+<div class="plotterpage">
     <div class="flex justify-between mt-4">
 
         <!-- Forms Section on the Left -->
@@ -17,12 +17,12 @@
 
         <div class="w-2/3 m-7">
             <!-- Plotting Section -->
-                <div class="plot-container bg-white p-6 rounded-lg shadow-md w-full h-full">
-                    <h2 class="text-xl font-semibold mb-2">Plot</h2>
+                <div class="plot-container p-6 rounded-lg shadow-md w-full h-full">
+                    <!--<h2 class="text-xl font-semibold mb-2 text-white">Plot</h2>-->
                     {% if plot_url %}
                         <img class="max-w-full h-auto" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
                     {% else %}
-                        <p class="text-gray-500">No plot available. Add elements and click "Plot" to generate one.</p>
+                        <p class="text-white-500">No plot available. Add elements and click "Plot" to generate one.</p>
                     {% endif %}
                 </div>
         </div> 
@@ -30,8 +30,9 @@
     </div>
 </div>
 <style>
-    body{
-        background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    .plot-container
+    {
+        background-color:transparent;
     }
 </style>
 {% endblock %}

@@ -6,16 +6,22 @@ import io
 import base64
 
 def plot_lines(lines):
-    plt.figure(figsize=(6, 4))  # Canvas size in inches
+    #config plot colors
+    fig = plt.figure()
+    fig.patch.set_facecolor('green') #background outside grid 
+    plt.figure(figsize=(10, 8))
+    plt.gca().set_facecolor('black') #background col of grid area
+    plt.grid(color='gray')  # Change gridline color
+    plt.xlabel("X")
+    plt.ylabel("Y")
+
     if lines:
         for l in lines:
             # Access p1 and p2 correctly (assuming p1 and p2 are dictionaries with 'x' and 'y' keys)
-            plt.scatter(l['p1']['x'], l['p1']['y'], color='blue')  # Accessing p1's x and y
-            plt.scatter(l['p2']['x'], l['p2']['y'], color='blue')  # Accessing p2's x and y
-            plt.plot([l['p1']['x'], l['p2']['x']], [l['p1']['y'], l['p2']['y']], color='black', linestyle='-')
+            plt.scatter(l['p1']['x'], l['p1']['y'], color='red')  # Accessing p1's x and y
+            plt.scatter(l['p2']['x'], l['p2']['y'], color='red')  # Accessing p2's x and y
+            plt.plot([l['p1']['x'], l['p2']['x']], [l['p1']['y'], l['p2']['y']], color='green', linestyle='-')
 
-    plt.xlabel("X")
-    plt.ylabel("Y")
     buf = io.BytesIO()  # Create buffer
     plt.savefig(buf, format='png')  # Saving the image into buffer
     buf.seek(0)  # We go back to the beginning of the stream
