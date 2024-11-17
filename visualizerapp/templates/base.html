@@ -11,22 +11,22 @@
 </head>
 
 
-<body class="bg-[#121212]">
+<body>
     <header class="relative">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex lg:gap-x-10">
-                <a href="/" class="text-md font-bold leading-6 text-white">QPlot</a>
-                <a href="/" class="text-sm font-semibold leading-6 text-[#f0fdf4]">Home</a>
-                <a href="/plot" class="text-sm font-semibold leading-6 text-gray-900">Plotter</a>
-                <a href="/dashboard" class="text-sm font-semibold leading-6 text-gray-900">Dashboard</a>
+                <a class="text-md font-bold leading-6">QPlot</a>
+                <a href="/" class="text-sm font-semibold leading-6">Home</a>
+                <a href="/plot" class="text-sm font-semibold leading-6">Plotter</a>
+                <a href="/dashboard" class="text-sm font-semibold leading-6">Dashboard</a>
             </div>
             
             <!-- Login/Logout area -->
             {% if user.is_authenticated %}
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a class="text-sm font-semibold leading-6 text-gray-900" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="text-sm font-semibold leading-6" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout <span aria-hidden="true">&rarr;</span>
                     </a>
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
@@ -35,7 +35,7 @@
                 </div>
             {% else %}
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+                    <a href="/login" class="text-sm font-semibold leading-6">Log in <span aria-hidden="true">&rarr;</span></a>
                 </div>
             {% endif %}
             
@@ -55,7 +55,7 @@
             <div class="fixed inset-0 z-50"></div>
             <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#191414] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                 <div class="flex items-center justify-between">
-                    <a href="/" class="-m-1.5 p-1.5 text-lg font-bold leading-6 text-gray-900">QPlot</a>
+                    <a class="-m-1.5 p-1.5 text-lg font-bold leading-6">QPlot</a>
                     <button id="mobile-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                         <span class="sr-only">Close menu</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -66,14 +66,14 @@
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/10">
                         <div class="space-y-2 py-6">
-                            <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
-                            <a href="/plot" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Plotter</a>
-                            <a href="/dashboard" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Dashboard</a>
+                            <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50">Home</a>
+                            <a href="/plot" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50">Plotter</a>
+                            <a href="/dashboard" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50">Dashboard</a>
 
                         </div>
                         {% if user.is_authenticated %}
                                 <div class="py-6">
-                                    <a class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:bg-gray-50" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
                                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
@@ -82,7 +82,7 @@
                                 </div>
                         {% else %}
                             <div class="py-6">
-                                <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+                                <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:bg-gray-50">Log in</a>
                             </div>
                         {% endif %}
                     </div>
@@ -108,7 +108,13 @@
 
     <style>
         body{
+            background-color: #121212;
+            background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(18,18,18,1) 74%, rgba(5,65,26,1) 100%);
             font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a{
+            color: whitesmoke;
         }
     </style>
 </body>
