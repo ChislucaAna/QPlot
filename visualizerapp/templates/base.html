@@ -7,23 +7,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Home{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{% static 'css/tailwind_full.css' %}" rel="stylesheet">
 </head>
-<body class="bg-white">
+
+
+<body class="bg-[#121212]">
     <header class="relative">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex lg:gap-x-10">
-                <a href="/" class="text-md font-bold leading-6 text-gray-900">QPlot</a>
-                <a href="/" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+                <a href="/" class="text-md font-bold leading-6 text-white">QPlot</a>
+                <a href="/" class="text-sm font-semibold leading-6 text-[#f0fdf4]">Home</a>
                 <a href="/plot" class="text-sm font-semibold leading-6 text-gray-900">Plotter</a>
-
-                <!--partea de dashboard apare doar pt user logat-->
                 <a href="/dashboard" class="text-sm font-semibold leading-6 text-gray-900">Dashboard</a>
             </div>
             
-            <!-- Right side for login -->
+            <!-- Login/Logout area -->
             {% if user.is_authenticated %}
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                     <a class="text-sm font-semibold leading-6 text-gray-900" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -53,7 +53,7 @@
         <!-- Mobile menu, show/hide based on menu state -->
         <div class="lg:hidden hidden" id="mobile-menu" role="dialog" aria-modal="true">
             <div class="fixed inset-0 z-50"></div>
-            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#191414] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                 <div class="flex items-center justify-between">
                     <a href="/" class="-m-1.5 p-1.5 text-lg font-bold leading-6 text-gray-900">QPlot</a>
                     <button id="mobile-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
@@ -68,8 +68,6 @@
                         <div class="space-y-2 py-6">
                             <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
                             <a href="/plot" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Plotter</a>
-
-                            <!--partea de dashboard apare doar pt user logat-->
                             <a href="/dashboard" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Dashboard</a>
 
                         </div>
@@ -93,10 +91,10 @@
         </div>
     </header>
 
-    {% block content %}{% endblock %}
+    {% block content %}{% endblock %} <!--aici vine partea de home-->
 
     <script>
-        // Simple script to toggle mobile menu visibility
+        // mobile menu visibility
         document.querySelector('#mobile-switch').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
@@ -109,9 +107,9 @@
     </script>
 
     <style>
-    body{
-        font-family: Arial, Helvetica, sans-serif;
-    }
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
     </style>
 </body>
 </html>
