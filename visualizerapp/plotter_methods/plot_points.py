@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt  # plotting module
 import io
 import base64
 
+
 def plot_points(points,connect_points):
-    plt.figure(figsize=(6, 4))  # Canvas size in inches
     if points:
         for p in points:
             plt.scatter(p['x'], p['y'], color='blue')
@@ -15,8 +15,6 @@ def plot_points(points,connect_points):
             ys = [p['y'] for p in points]
             plt.plot(xs, ys, color='gray', linestyle='--')
 
-    plt.xlabel("X")
-    plt.ylabel("Y")
     buf = io.BytesIO()  # Create buffer
     plt.savefig(buf, format='png')  # Saving the image into buffer
     buf.seek(0)  # We go back to the beginning of the stream

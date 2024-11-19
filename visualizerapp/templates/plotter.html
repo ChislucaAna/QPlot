@@ -48,7 +48,7 @@
                     {% if plot_url %}
                         <img class="max-w-full h-auto rounded-lg" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
                     {% else %}
-                        <p class="text-white-500">No plot available. Add elements and click "Plot" to generate one.</p>
+                        <p class="text-white">No plot available. Add elements and click "Plot" to generate one.</p>
                     {% endif %}
                 </div>
         </div> 
@@ -63,7 +63,6 @@
 
     .form_section
     {
-        background-color: #0F1D14;
         background-color: #0F0F0F;
     }
 </style>
@@ -83,6 +82,16 @@
       document.getElementById(`tab-${tabId}`).classList.remove('bg-black');
       document.getElementById(`tab-${tabId}`).classList.add('bg-green-500', 'text-white');
       document.getElementById(tabId).classList.remove('hidden');
+
+      // Save the active tab ID in session storage
+        sessionStorage.setItem('activeTab', tabId);
     }
+
+
+    // Load the active tab from session storage on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const activeTab = sessionStorage.getItem('activeTab') || 'points'; // Default to 'points'
+        switchTab(activeTab);
+    });
   </script>
 {% endblock %}

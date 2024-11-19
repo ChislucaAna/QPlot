@@ -6,15 +6,6 @@ import io
 import base64
 
 def plot_lines(lines):
-    #config plot colors
-    fig = plt.figure()
-    fig.patch.set_facecolor('green') #background outside grid 
-    plt.figure(figsize=(10, 8))
-    plt.gca().set_facecolor('black') #background col of grid area
-    plt.grid(color='gray')  # Change gridline color
-    plt.xlabel("X")
-    plt.ylabel("Y")
-
     if lines:
         for l in lines:
             # Access p1 and p2 correctly (assuming p1 and p2 are dictionaries with 'x' and 'y' keys)

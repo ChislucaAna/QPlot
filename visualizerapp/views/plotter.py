@@ -9,6 +9,7 @@ from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
 from visualizerapp.plotter_methods.plot_points import plot_points
 from visualizerapp.plotter_methods.plot_lines import plot_lines
+from visualizerapp.plotter_methods.config_visuals import config
 
 def serialize_points(points):
     return [PunctSerializer(point).data for point in points]
@@ -73,10 +74,12 @@ class PlotView(View):
                 lines.append(serialized_line)
 
         elif 'plot_points' in request.POST:
+            config()
             plot_url = plot_points(points,connect_points)
             request.session['plot_url'] = plot_url
         
         elif 'plot_lines' in request.POST:
+            config()
             plot_url = plot_lines(lines)
             request.session['plot_url'] = plot_url
         
