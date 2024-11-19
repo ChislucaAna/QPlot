@@ -2,7 +2,7 @@
     <div class="flex justify-between w-full">
         <!-- Form Section -->
         <div class="form-container p-6 rounded-lg shadow-md w-full line_menu">
-            <h2 class="text-xl font-semibold mb-2">Add a Line</h2>
+            <h2 class="text-xl font-semibold mb-2 text-white">Add a Line</h2>
             <form method="post" class="mb-4">
                 {% csrf_token %}
                 {{ line_form.as_p }}
@@ -45,10 +45,10 @@
                 </div>
                 
             </form>
-            <h3 class="text-lg font-semibold mb-2">Lines Added:</h3>
+            <h3 class="text-lg font-semibold mb-2 text-white">Lines Added:</h3>
             <ul class="list-disc pl-5">
                 {% for l in lines %}
-                    <li class="flex items-center space-x-2">
+                    <li class="flex items-center space-x-2 text-white">
                         <span>({{ l.p1.x }}, {{ l.p1.y }}), ({{ l.p2.x }}, {{ l.p2.y }})</span>
                     </li>
                 {% endfor %}
@@ -60,6 +60,6 @@
 <style>
     .line_menu
     {
-        background-color: aqua;
+        background-color: transparent;
     }
 </style>
