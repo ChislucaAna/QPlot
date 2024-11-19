@@ -10,9 +10,35 @@
     <div class="flex justify-between mt-4">
 
         <!-- Forms Section on the Left -->
-        <div class="w-1/3">
-            {% include 'plotter_sections/points.html' %}
-            {% include 'plotter_sections/lines.html' %}
+        <div class="w-1/3 form_section rounded-lg m-6">
+            <ul class="flex overflow-auto">
+                <li>
+                  <button
+                    id="tab-points"
+                    class="tab-button m-3 rounded-lg px-4 py-3 bg-green-500 text-white hover:bg-gray-700 focus:outline-none"
+                    onclick="switchTab('points')"
+                  >
+                    Points
+                  </button>
+                </li>
+                <li>
+                  <button
+                    id="tab-lines"
+                    class="tab-button m-3 rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                    onclick="switchTab('lines')"
+                  >
+                    Lines
+                  </button>
+                </li>
+              </ul>
+
+            <div id="points" class="tab-content"> 
+                {% include 'plotter_sections/points.html' %}
+            </div>
+
+            <div id="lines" class="tab-content hidden">
+                {% include 'plotter_sections/lines.html' %}
+            </div>
         </div>
 
         <div class="w-2/3 m-7">
@@ -20,7 +46,7 @@
                 <div class="plot-container p-6 rounded-lg shadow-md w-full h-full">
                     <!--<h2 class="text-xl font-semibold mb-2 text-white">Plot</h2>-->
                     {% if plot_url %}
-                        <img class="max-w-full h-auto" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
+                        <img class="max-w-full h-auto rounded-lg" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
                     {% else %}
                         <p class="text-white-500">No plot available. Add elements and click "Plot" to generate one.</p>
                     {% endif %}
@@ -34,5 +60,29 @@
     {
         background-color:transparent;
     }
+
+    .form_section
+    {
+        background-color: #0F1D14;
+        background-color: #0F0F0F;
+    }
 </style>
+<script>
+    function switchTab(tabId) {
+      // Remove active state from all buttons and hide all tab content
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('bg-green-500');
+        button.classList.add('bg-gray-700');
+      });
+  
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+  
+      // Add active state to the clicked button and show its content
+      document.getElementById(`tab-${tabId}`).classList.remove('bg-black');
+      document.getElementById(`tab-${tabId}`).classList.add('bg-green-500', 'text-white');
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+  </script>
 {% endblock %}
