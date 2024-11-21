@@ -33,6 +33,8 @@ class PlotView(View):
         #current session context for data load
         context = {
             'connect_points':request.session.get('connect_points', False),
+            'show_middles':request.session.get('show_middles', False),
+            'show_intersection':request.session.get('show_intersection', False),
             'line_form':line_form,
             'point_form': point_form, 
             'plot_url': request.session.get('plot_url'),
@@ -50,10 +52,17 @@ class PlotView(View):
         points = request.session.get('points', [])
         lines = request.session.get('lines', [])
         connect_points = request.session.get('connect_points', False)
+        show_middles = request.session.get('show_middles', False)
+        show_intersection=request.session.get('show_intersection', False)
+
 
         #post requests:
         if 'connect_points' in request.POST:
             request.session['connect_points'] = not connect_points
+        if 'show_middles' in request.POST:  
+            request.session['show_middles'] = not show_middles
+        if 'show_intersection' in request.POST:  
+            request.session['show_intersection'] = not show_intersection
         elif 'add_point' in request.POST:
             if point_form.is_valid():
                 x = point_form.cleaned_data['x']
@@ -80,7 +89,7 @@ class PlotView(View):
         
         elif 'plot_lines' in request.POST:
             config()
-            plot_url = plot_lines(lines)
+            plot_url = plot_lines(lines,show_intersection,show_middles)
             request.session['plot_url'] = plot_url
         
         # update session data
@@ -90,6 +99,8 @@ class PlotView(View):
 
         context = {
             'connect_points':request.session.get('connect_points', False),
+            'show_middles':request.session.get('show_middles', False),
+            'show_intersection':request.session.get('show_intersection', False),
             'line_form':line_form,
             'point_form': point_form, 
             'plot_url': request.session.get('plot_url'),
