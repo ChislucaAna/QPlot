@@ -7,9 +7,7 @@ from visualizerapp.models.Lines import Line
 #serializers
 from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
-from visualizerapp.plotter_methods.plot_points import plot_points
-from visualizerapp.plotter_methods.plot_lines import plot_lines
-from visualizerapp.plotter_methods.config_visuals import config
+from visualizerapp.plotter_methods.plotter_methods import *
 
 class PlotView(View):
     def get(self, request, *args, **kwargs):
@@ -48,6 +46,7 @@ class PlotView(View):
                 new_point = Punct(float(x),float(y))
                 serialized_point=PunctSerializer(new_point).data
                 context_data['points'].append(serialized_point)
+                request.session['points'] = context_data['points']
         elif 'add_line' in request.POST:
             if line_form.is_valid():
                 x1= line_form.cleaned_data['x1']
@@ -58,25 +57,16 @@ class PlotView(View):
                 p2 = new_point = Punct(float(x2),float(y2))
                 new_line = Line(p1, p2)
                 serialized_line = LineSerializer(new_line).data
-                context_data['lines'].append(serialized_line)
-
-        elif 'plot_points' in request.POST:
-            config()
-            plot_url = plot_points(context_data['points'], context_data['connect_points'])
-            request.session['plot_url'] = plot_url
-        
-        elif 'plot_lines' in request.POST:
-            config()
-            plot_url = plot_lines(context_data['lines'], context_data['show_intersection'], context_data['show_middles'])
-            request.session['plot_url'] = plot_url
-        
+                context_data['lines'].append(serialized_line) 
+                request.session['lines'] = context_data['lines']   
 
         # Update session data
-        request.session['points'] = context_data['points']
-        request.session['lines'] = context_data['lines']
+        request.session['plot_url']= generate_plot_url(context_data) 
+        #print(request.session['plot_url'])
         request.session.modified = True
 
         context = self.create_context(request, point_form, line_form, context_data)
+        #print(generate_plot_url(context_data))
         return render(request, 'plotter.html', context)
 
     def create_context(self, request, point_form, line_form, context_data):

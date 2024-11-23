@@ -46,7 +46,9 @@
                 <div class="plot-container p-6 rounded-lg shadow-md w-full h-full">
                     <!--<h2 class="text-xl font-semibold mb-2 text-white">Plot</h2>-->
                     {% if plot_url %}
-                        <img class="max-w-full h-auto rounded-lg" src="data:image/png;base64,{{ plot_url }}" alt="Point Plot">
+                        <img class="max-w-full h-auto rounded-lg" 
+                        src="{{ plot_url }}"
+                        >
                     {% else %}
                         <p class="text-white">No plot available. Add elements and click "Plot" to generate one.</p>
                     {% endif %}

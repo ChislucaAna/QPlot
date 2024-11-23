@@ -33,17 +33,7 @@
                     <button type="submit" name="calculate_slope" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Calculate slope</button>
 
                 </div>
-                <br>
-
-                <!-- Plot Button -->
-                <div class="flex justify-center w-full">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" name="plot_lines" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Plot lines</button>
-                    </form>
-                </div>
-                
+                <br>            
             </form>
             <h3 class="text-lg font-semibold mb-2 text-white">Lines Added:</h3>
             <ul class="list-disc pl-5">
