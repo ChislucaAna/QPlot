@@ -10,16 +10,28 @@ from visualizerapp.models.Points import Punct
 def plot_lines(lines,show_intersection,show_middles):
     if lines:
         for l in lines:
-            # Access p1 and p2 correctly (assuming p1 and p2 are dictionaries with 'x' and 'y' keys)
             plt.scatter(l['p1']['x'], l['p1']['y'], color='red')  # Accessing p1's x and y
             plt.scatter(l['p2']['x'], l['p2']['y'], color='red')  # Accessing p2's x and y
             plt.plot([l['p1']['x'], l['p2']['x']], [l['p1']['y'], l['p2']['y']], color='green', linestyle='-')
             if show_middles:
-                p1 = Punct(l['p1']['x'], l['p1']['y'])  # Access the 'x' and 'y' values
+                p1 = Punct(l['p1']['x'], l['p1']['y'])
                 p2 = Punct(l['p2']['x'], l['p2']['y'])
                 l = Line(p1,p2)
                 mijloc = l.mijloc()
                 plt.scatter(mijloc.x, mijloc.y, color='blue')
+        if show_intersection:
+            for l1 in lines:
+                for l2 in lines:
+                    p1 = Punct(l1['p1']['x'], l1['p1']['y'])
+                    p2 = Punct(l1['p2']['x'], l1['p2']['y'])
+                    l1 = Line(p1,p2)
+
+                    p1 = Punct(l1['p1']['x'], l1['p1']['y'])
+                    p2 = Punct(l1['p2']['x'], l1['p2']['y'])
+                    l2 = Line(p1,p2)
+
+                    mijloc = l.mijloc()
+                    plt.scatter(mijloc.x, mijloc.y, color='blue')
 
     buf = io.BytesIO()  # Create buffer
     plt.savefig(buf, format='png')  # Saving the image into buffer
