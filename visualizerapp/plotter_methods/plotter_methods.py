@@ -49,20 +49,27 @@ def plot_lines(lines,show_intersection,show_middles):
                 mijloc = l.mijloc()
                 plt.scatter(mijloc.x, mijloc.y, color='blue')
                 print("mij")
-                '''
+                
         if show_intersection:
-            for l1 in lines:
-                for l2 in lines:
-                    p1 = Punct(l1['p1']['x'], l1['p1']['y'])
-                    p2 = Punct(l1['p2']['x'], l1['p2']['y'])
-                    l1 = Line(p1,p2)
+            for i, l1 in enumerate(lines):
+                for j, l2 in enumerate(lines):
+                    if i >= j:  # Avoid comparing the same line or repeating pairs
+                        continue
 
-                    p1 = Punct(l2.p1.x, l2.p1.y)
-                    p2 = Punct(l2.p2.x, l2.p2.y)
-                    l2 = Line(p1,p2)
+                    # Create Punct objects for the first line
+                    p1_l1 = Punct(l1['p1']['x'], l1['p1']['y'])
+                    p2_l1 = Punct(l1['p2']['x'], l1['p2']['y'])
+                    line1 = Line(p1_l1, p2_l1)
 
-                    intersectie=l1.intersectie(l2)
-                    plt.scatter(intersectie.x, intersectie.y, color='pink')'''
+                    # Create Punct objects for the second line
+                    p1_l2 = Punct(l2['p1']['x'], l2['p1']['y'])
+                    p2_l2 = Punct(l2['p2']['x'], l2['p2']['y'])
+                    line2 = Line(p1_l2, p2_l2)
+
+                    # Find intersection and plot
+                    intersectie = line1.intersectie(line2)
+                    if intersectie:  # Ensure there is an intersection
+                        plt.scatter(intersectie.x, intersectie.y, color='pink')
 
 def generate_plot_url(context_data):
     print("generating plot...")
@@ -72,13 +79,8 @@ def generate_plot_url(context_data):
     plot_points(context_data['points'], context_data['connect_points'])
     plot_lines(context_data['lines'], context_data['show_intersection'], context_data['show_middles'])
     try:
-        #print(buf)
         plt.savefig(buf, format='png')
         buf.seek(0)
-        #if buf.tell() == 0:
-        #    print("Error: Plot buffer is empty!")
-        #    return None
-        # Encode the plot to base64
         plot_url = base64.b64encode(buf.read()).decode("utf-8")
     except Exception as e:
         print(f"Error saving plot: {e}")

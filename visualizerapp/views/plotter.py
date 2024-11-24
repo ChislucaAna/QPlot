@@ -8,6 +8,7 @@ from visualizerapp.models.Lines import Line
 from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
 from visualizerapp.plotter_methods.plotter_methods import *
+from visualizerapp.views.delete import delete_line
 
 class PlotView(View):
     def get(self, request, *args, **kwargs):
@@ -18,6 +19,9 @@ class PlotView(View):
         point_form=PointForm()
         line_form=LineForm()
         #current session context for data load
+        context_data = self.get_session_data(request)
+        context = self.create_context(request, point_form, line_form,context_data)
+        request.session['plot_url']= generate_plot_url(self.get_session_data(request))
         context_data = self.get_session_data(request)
         context = self.create_context(request, point_form, line_form,context_data)
         return render(request, 'plotter.html', context)
@@ -55,8 +59,7 @@ class PlotView(View):
                 new_line = Line(p1, p2)
                 serialized_line = LineSerializer(new_line).data
                 context_data['lines'].append(serialized_line) 
-                request.session['lines'] = context_data['lines']   
-
+                request.session['lines'] = context_data['lines']  
         request.session.modified = True
         request.session['plot_url']= generate_plot_url(self.get_session_data(request))
         context_data=self.get_session_data(request)
@@ -91,4 +94,3 @@ class PlotView(View):
             'lines': request.session.get('lines', []),
             'plot_url': request.session.get('plot_url'),
         }
-

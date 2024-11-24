@@ -40,6 +40,15 @@
                 {% for l in lines %}
                     <li class="flex items-center space-x-2 text-white">
                         <span>({{ l.p1.x }}, {{ l.p1.y }}), ({{ l.p2.x }}, {{ l.p2.y }})</span>
+
+                        <!--Delete button-->
+                        <form method="POST" action="{% url 'delete_line' forloop.counter0 %}">
+                            {% csrf_token %}
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700">
+                                    X
+                                </button>
+                        </form>
+
                     </li>
                 {% endfor %}
             </ul>
