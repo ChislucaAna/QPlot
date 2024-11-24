@@ -17,7 +17,6 @@ class PlotView(View):
         #init forms
         point_form=PointForm()
         line_form=LineForm()
-
         #current session context for data load
         context_data = self.get_session_data(request)
         context = self.create_context(request, point_form, line_form,context_data)
@@ -25,21 +24,19 @@ class PlotView(View):
 
     def post(self, request, *args, **kwargs):
 
-        #initialize post-request specific forms
         point_form = PointForm(request.POST or None)
         line_form = LineForm(request.POST or None)
 
-        #request session data
         context_data = self.get_session_data(request)
 
         #post requests:
         if 'connect_points' in request.POST:
             request.session['connect_points'] = not context_data['connect_points']
-        if 'show_middles' in request.POST:  
+        elif 'show_middles' in request.POST:  
             request.session['show_middles'] = not context_data['show_middles']
-        if 'show_intersection' in request.POST:  
+        elif 'show_intersection' in request.POST:
             request.session['show_intersection'] = not context_data['show_intersection']
-        if 'add_point' in request.POST:
+        elif 'add_point' in request.POST:
             if point_form.is_valid():
                 x = point_form.cleaned_data['x']
                 y = point_form.cleaned_data['y']
@@ -47,7 +44,7 @@ class PlotView(View):
                 serialized_point=PunctSerializer(new_point).data
                 context_data['points'].append(serialized_point)
                 request.session['points'] = context_data['points']
-        elif 'add_line' in request.POST:
+        elif'add_line' in request.POST:
             if line_form.is_valid():
                 x1= line_form.cleaned_data['x1']
                 y1 = line_form.cleaned_data['y1']
@@ -60,13 +57,10 @@ class PlotView(View):
                 context_data['lines'].append(serialized_line) 
                 request.session['lines'] = context_data['lines']   
 
-        # Update session data
-        request.session['plot_url']= generate_plot_url(context_data) 
-        #print(request.session['plot_url'])
         request.session.modified = True
-
+        request.session['plot_url']= generate_plot_url(self.get_session_data(request))
+        context_data=self.get_session_data(request)
         context = self.create_context(request, point_form, line_form, context_data)
-        #print(generate_plot_url(context_data))
         return render(request, 'plotter.html', context)
 
     def create_context(self, request, point_form, line_form, context_data):
@@ -86,12 +80,13 @@ class PlotView(View):
             request.session['points'] = []
         if 'lines' not in request.session:
             request.session['lines'] = []
+
     
     def get_session_data(self, request):
         return {
-            'connect_points': request.session.get('connect_points', False),
-            'show_middles': request.session.get('show_middles', False),
-            'show_intersection': request.session.get('show_intersection', False),
+            'connect_points': request.session.get('connect_points'),
+            'show_middles': request.session.get('show_middles'),
+            'show_intersection': request.session.get('show_intersection'),
             'points': request.session.get('points', []),
             'lines': request.session.get('lines', []),
             'plot_url': request.session.get('plot_url'),

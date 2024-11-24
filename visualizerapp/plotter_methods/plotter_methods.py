@@ -48,6 +48,8 @@ def plot_lines(lines,show_intersection,show_middles):
                 l = Line(p1,p2)
                 mijloc = l.mijloc()
                 plt.scatter(mijloc.x, mijloc.y, color='blue')
+                print("mij")
+                '''
         if show_intersection:
             for l1 in lines:
                 for l2 in lines:
@@ -55,14 +57,15 @@ def plot_lines(lines,show_intersection,show_middles):
                     p2 = Punct(l1['p2']['x'], l1['p2']['y'])
                     l1 = Line(p1,p2)
 
-                    p1 = Punct(l1['p1']['x'], l1['p1']['y'])
-                    p2 = Punct(l1['p2']['x'], l1['p2']['y'])
+                    p1 = Punct(l2.p1.x, l2.p1.y)
+                    p2 = Punct(l2.p2.x, l2.p2.y)
                     l2 = Line(p1,p2)
 
-                    mijloc = l.mijloc()
-                    plt.scatter(mijloc.x, mijloc.y, color='blue')
+                    intersectie=l1.intersectie(l2)
+                    plt.scatter(intersectie.x, intersectie.y, color='pink')'''
 
 def generate_plot_url(context_data):
+    print("generating plot...")
     buf = io.BytesIO()
 
     config()
@@ -83,6 +86,4 @@ def generate_plot_url(context_data):
     finally:
         buf.close()
         plt.close()
-    #print(plot_url)
     return f"data:image/png;base64,{plot_url}"
-    #return plot_url
