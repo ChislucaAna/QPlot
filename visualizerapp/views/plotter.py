@@ -21,7 +21,9 @@ class PlotView(View):
         #current session context for data load
         context_data = self.get_session_data(request)
         context = self.create_context(request, point_form, line_form,context_data)
+        #plot with current context
         request.session['plot_url']= generate_plot_url(self.get_session_data(request))
+        #update context post-plot
         context_data = self.get_session_data(request)
         context = self.create_context(request, point_form, line_form,context_data)
         return render(request, 'plotter.html', context)
@@ -40,6 +42,10 @@ class PlotView(View):
             request.session['show_middles'] = not context_data['show_middles']
         elif 'show_intersection' in request.POST:
             request.session['show_intersection'] = not context_data['show_intersection']
+        elif 'show_length' in request.POST:  
+            request.session['show_length'] = not context_data['show_length']
+        elif 'show_slope' in request.POST:
+            request.session['show_slope'] = not context_data['show_slope']
         elif 'add_point' in request.POST:
             if point_form.is_valid():
                 x = point_form.cleaned_data['x']
@@ -54,14 +60,16 @@ class PlotView(View):
                 y1 = line_form.cleaned_data['y1']
                 x2 = line_form.cleaned_data['x2']
                 y2 = line_form.cleaned_data['y2']
-                p1 = new_point = Punct(float(x1),float(y1))
-                p2 = new_point = Punct(float(x2),float(y2))
+                p1 = Punct(float(x1),float(y1))
+                p2 = Punct(float(x2),float(y2))
                 new_line = Line(p1, p2)
                 serialized_line = LineSerializer(new_line).data
                 context_data['lines'].append(serialized_line) 
                 request.session['lines'] = context_data['lines']  
         request.session.modified = True
+        #plot with current context
         request.session['plot_url']= generate_plot_url(self.get_session_data(request))
+        #update context post-plot
         context_data=self.get_session_data(request)
         context = self.create_context(request, point_form, line_form, context_data)
         return render(request, 'plotter.html', context)
@@ -71,6 +79,8 @@ class PlotView(View):
             'connect_points': context_data['connect_points'],
             'show_middles': context_data['show_middles'],
             'show_intersection': context_data['show_intersection'],
+            'show_length': context_data['show_length'],
+            'show_slope': context_data['show_slope'],
             'line_form': line_form,
             'point_form': point_form,
             'plot_url': context_data['plot_url'],
@@ -90,6 +100,8 @@ class PlotView(View):
             'connect_points': request.session.get('connect_points'),
             'show_middles': request.session.get('show_middles'),
             'show_intersection': request.session.get('show_intersection'),
+            'show_length': request.session.get('show_length'),
+            'show_slope': request.session.get('show_slope'),
             'points': request.session.get('points', []),
             'lines': request.session.get('lines', []),
             'plot_url': request.session.get('plot_url'),

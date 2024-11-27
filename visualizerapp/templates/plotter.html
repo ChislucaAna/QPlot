@@ -41,9 +41,10 @@
             </div>
         </div>
 
-        <div class="w-2/3 m-7">
+        <div class="w-2/3 m-7 flex-col">
+
             <!-- Plotting Section -->
-                <div class="plot-container p-6 rounded-lg shadow-md w-full h-full">
+                <div class="plot-container rounded-lg shadow-md w-full mb-4">
                     <!--<h2 class="text-xl font-semibold mb-2 text-white">Plot</h2>-->
                     {% if plot_url %}
                         <img class="max-w-full h-auto rounded-lg" 
@@ -53,8 +54,15 @@
                         <p class="text-white">No plot available. Add elements and click "Plot" to generate one.</p>
                     {% endif %}
                 </div>
+
+
+            <!--Info section-->
+            <div id="line-info" class=" border border-gray-300 rounded flex-grow p-4 w-2/3">
+                <h1 class="text-white">Click on the info info icon to show information about selected line.</h2>
+                <p id="line-details"></p>
+            </div>
+
         </div> 
-        </dif>
     </div>
 </div>
 <style>

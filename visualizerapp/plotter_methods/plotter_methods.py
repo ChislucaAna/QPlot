@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 def config():
     fig = plt.figure()
-    fig.set_size_inches(10, 8)
+    fig.set_size_inches(10, 7)
     fig.patch.set_facecolor('#0F0F0F') #background outside grid 
     plt.gca().set_facecolor('black') #background col of grid area
     plt.grid(color='gray')  # Change gridline color
@@ -30,7 +30,7 @@ def config():
 def plot_points(points,connect_points):
     if points:
         for p in points:
-            plt.scatter(p['x'], p['y'], color='blue')
+            plt.scatter(p['x'], p['y'], color='white')
         if connect_points:
             xs = [p['x'] for p in points]
             ys = [p['y'] for p in points]
@@ -48,7 +48,6 @@ def plot_lines(lines,show_intersection,show_middles):
                 l = Line(p1,p2)
                 mijloc = l.mijloc()
                 plt.scatter(mijloc.x, mijloc.y, color='blue')
-                print("mij")
                 
         if show_intersection:
             for i, l1 in enumerate(lines):
@@ -69,7 +68,7 @@ def plot_lines(lines,show_intersection,show_middles):
                     # Find intersection and plot
                     intersectie = line1.intersectie(line2)
                     if intersectie:  # Ensure there is an intersection
-                        plt.scatter(intersectie.x, intersectie.y, color='pink')
+                        plt.scatter(intersectie.x, intersectie.y, color='purple')
 
 def generate_plot_url(context_data):
     print("generating plot...")
