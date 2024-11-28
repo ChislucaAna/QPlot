@@ -1,3 +1,7 @@
+<link rel="stylesheet" 
+href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=info" />
+
+
 <div class="container p-6 w-full">
     <div class="flex justify-between w-full">
         <!-- Form Section -->
@@ -27,25 +31,6 @@
                     </button>
 
                 </div>
-                <br>
-                <div class="flex flex-col space-y-4">
-                    <button 
-                    type="submit" 
-                    name="show_length" 
-                    class="py-2 px-4 rounded hover:bg-blue-600 
-                           {% if show_length %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
-                    Show length
-                    </button>
-
-                    <button 
-                    type="submit" 
-                    name="show_slope" 
-                    class="py-2 px-4 rounded hover:bg-blue-600 
-                           {% if show_slope %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
-                    Show slope
-                    </button>
-
-                </div>
                 <br>            
             </form>
             <h3 class="text-lg font-semibold mb-2 text-white">Lines Added:</h3>
@@ -61,7 +46,9 @@
                             <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 flex items-center space-x-1 info-btn" 
                                     name="show_info"
                                     type="submit">
-                                I
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
                             </button>
                         </form>
 

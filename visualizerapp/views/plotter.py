@@ -9,12 +9,13 @@ from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
 from visualizerapp.plotter_methods.plotter_methods import *
 from visualizerapp.views.delete import delete_line
+from visualizerapp.views.info import line_info
 
 class PlotView(View):
     def get(self, request, *args, **kwargs):
         #init session
         self.initialize_session(request)
-
+        print(request.session['line_info'])
         #init forms
         point_form=PointForm()
         line_form=LineForm()
@@ -86,6 +87,7 @@ class PlotView(View):
             'plot_url': context_data['plot_url'],
             'points': context_data['points'],
             'lines': context_data['lines'],
+            'line_info': context_data['line_info'],
         }
     
     def initialize_session(self, request):
@@ -93,6 +95,8 @@ class PlotView(View):
             request.session['points'] = []
         if 'lines' not in request.session:
             request.session['lines'] = []
+        if 'line_info' not in request.session:
+            request.session['line_info'] = {}
 
     
     def get_session_data(self, request):
@@ -105,4 +109,5 @@ class PlotView(View):
             'points': request.session.get('points', []),
             'lines': request.session.get('lines', []),
             'plot_url': request.session.get('plot_url'),
+            'line_info': request.session.get('line_info',{})
         }

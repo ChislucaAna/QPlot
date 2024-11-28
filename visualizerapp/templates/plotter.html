@@ -58,8 +58,11 @@
 
             <!--Info section-->
             <div id="line-info" class=" border border-gray-300 rounded flex-grow p-4 w-2/3">
+              {% if line_info %}
+                <p class="text-white">{{ line_info }}</p>
+              {% else %}
                 <h1 class="text-white">Click on the info info icon to show information about selected line.</h2>
-                <p id="line-details"></p>
+               {% endif %}
             </div>
 
         </div> 
