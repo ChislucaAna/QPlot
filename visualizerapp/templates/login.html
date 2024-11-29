@@ -6,9 +6,9 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="flex items-center justify-center z-10 bg-gray-100 min-h-screen">
-    <section class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
-        <h2 class="text-center text-3xl font-extrabold text-gray-900">Log in</h2>
+<div class="flex items-center justify-center z-10 min-h-screen">
+    <section class="max-w-md w-full bg-black rounded-lg shadow-md p-8 space-y-6">
+        <h2 class="text-center text-3xl font-extrabold text-white">Log in</h2>
 
         <!--FORMULARUL DE LOGIN-->
         <form method="post" class="space-y-6">
@@ -16,6 +16,7 @@
             {{ form.non_field_errors }}
 
             {% for field in form %}
+
             <div class="space-y-1">
                 {{ field.label_tag }}
                 <div>
@@ -34,19 +35,14 @@
         </form>
 
         <!--ERROR HANDLING-->
-        {% if form.non_field_errors %}
+          {% if field.errors %}
             <div class="error">
-                {% for error in form.non_field_errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
+                <p>
+                    {% for error in field.errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                </p>
             </div>
-        {% endif %}
-        {% if field.errors %}
-        <div class="error">
-            {% for error in field.errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
         {% endif %}
 
 
@@ -62,12 +58,6 @@
 </div>
 
 <style>
-    body {
-        background-size: cover;
-        background-attachment: fixed;
-        margin: 0;
-        overflow: hidden;
-    }
     input {
         border: 2px solid #D1D5DB;
         border-radius: 10px;
@@ -90,6 +80,16 @@
     input::placeholder {
         color: #9CA3AF;
         opacity: 1;
+    }
+
+    label
+    {
+        color: white;
+    }
+
+    li
+    {
+    color:red;
     }
 </style>
 {% endblock %}

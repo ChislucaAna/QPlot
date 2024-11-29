@@ -1,7 +1,6 @@
 <!--partea de navigare-->
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,19 +13,20 @@
 <body>
     <header class="relative">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <!-- Left Placeholder -->
+            <div class="hidden lg:flex lg:flex-1"></div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden lg:flex lg:gap-x-10">
-                <a class="text-md font-bold leading-6">QPlot</a>
-                <a href="/" class="text-sm font-semibold leading-6">Home</a>
-                <a href="/plot" class="text-sm font-semibold leading-6">Plotter</a>
-                <a href="/dashboard" class="text-sm font-semibold leading-6">Dashboard</a>
+            <div class="hidden lg:flex lg:gap-x-10 mx-auto">
+                <a href="/" class="text-base font-semibold leading-6">Home</a>
+                <a href="/plot" class="text-base font-semibold leading-6">Plotter</a>
+                <a href="/dashboard" class="text-base font-semibold leading-6">Projects</a>
             </div>
             
             <!-- Login/Logout area -->
             {% if user.is_authenticated %}
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a class="text-sm font-semibold leading-6" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="text-base font-semibold leading-6" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout <span aria-hidden="true">&rarr;</span>
                     </a>
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
@@ -35,7 +35,7 @@
                 </div>
             {% else %}
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/login" class="text-sm font-semibold leading-6">Log in <span aria-hidden="true">&rarr;</span></a>
+                    <a href="/login" class="text-base font-semibold leading-6">Log in <span aria-hidden="true">&rarr;</span></a>
                 </div>
             {% endif %}
             
