@@ -18,6 +18,6 @@ def line_info(request, line_id):
         line_info = request.session.get('line_info', {})
         line_info["length"] = line.lungime()
         line_info["slope"] = line.panta()
-        line_info["mediatoare"]=LineSerializer(line.mediatoare()).data
+        line_info["mediator"]=LineSerializer(line.mediatoare()).data
         request.session.modified = True
         return redirect('plotter')

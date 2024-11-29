@@ -7,10 +7,9 @@
 {% block content %}
 
 <div class="plotterpage">
-    <div class="flex justify-between mt-4">
-
+    <div class="flex justify-between m-6 ml-20 mr-20 h-4/5">
         <!-- Forms Section on the Left -->
-        <div class="w-1/3 form_section rounded-lg m-6">
+        <div class="w-1/2 form_section rounded-lg mr-5 max-h-full">
             <ul class="flex overflow-auto">
                 <li>
                   <button
@@ -41,13 +40,12 @@
             </div>
         </div>
 
-        <div class="w-2/3 m-7 flex-col">
+        <div class="w-1/2 flex-col justify-center rounded-lg ml-5 form_section max-h-full">
 
             <!-- Plotting Section -->
-                <div class="plot-container rounded-lg shadow-md w-full mb-4">
-                    <!--<h2 class="text-xl font-semibold mb-2 text-white">Plot</h2>-->
+                <div class="plot-container rounded-lg shadow-md w-full">
                     {% if plot_url %}
-                        <img class="max-w-full h-auto rounded-lg" 
+                        <img class="max-w-full m-auto rounded-lg"
                         src="{{ plot_url }}"
                         >
                     {% else %}
@@ -57,11 +55,15 @@
 
 
             <!--Info section-->
-            <div id="line-info" class=" border border-gray-300 rounded flex-grow p-4 w-2/3">
+            <div id="line-info" class="m-4 hidden">
               {% if line_info %}
-                <p class="text-white">{{ line_info }}</p>
+                <ul class="text-white">
+                  {% for key, value in line_info.items %}
+                    <li><strong>{{ key|capfirst }}:</strong> {{ value }}</li>
+                  {% endfor %}
+                </ul>
               {% else %}
-                <h1 class="text-white">Click on the info info icon to show information about selected line.</h2>
+                <h1 class="text-white">Click on the info icon to show information about selected line.</h2>
                {% endif %}
             </div>
 
@@ -69,10 +71,6 @@
     </div>
 </div>
 <style>
-    .plot-container
-    {
-        background-color:transparent;
-    }
 
     .form_section
     {
@@ -90,7 +88,15 @@
       document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.add('hidden');
       });
-  
+
+      //Show info section only if the line tab is selected
+      const lineInfoSection = document.getElementById('line-info');
+      if (tabId === 'lines') {
+        lineInfoSection.classList.remove('hidden');  // Show line-info when 'lines' tab is selected
+      } else {
+        lineInfoSection.classList.add('hidden');  // Hide line-info for other tabs
+      }
+
       // Add active state to the clicked button and show its content
       document.getElementById(`tab-${tabId}`).classList.remove('bg-black');
       document.getElementById(`tab-${tabId}`).classList.add('bg-green-500', 'text-white');
