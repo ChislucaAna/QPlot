@@ -12,21 +12,21 @@ href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wg
                 {{ line_form.as_p }}
                 <br>
                 <div class="flex flex-col space-y-4">
-                    <button type="submit" name="add_line" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Line</button>
+                    <button type="submit" name="add_line" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add Line</button>
 
                     <button 
                     type="submit" 
                     name="show_middles" 
-                    class="py-2 px-4 rounded hover:bg-blue-600 
-                           {% if show_middles %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    class="py-2 px-4 rounded hover:bg-green-300
+                           {% if show_middles %}bg-green-500 text-white{% else %}bg-white text-green-500 border border-green-500{% endif %}">
                     Show middle points
                     </button>
 
                     <button 
                     type="submit" 
                     name="show_intersection" 
-                    class="py-2 px-4 rounded hover:bg-blue-600 
-                           {% if show_intersection %}bg-blue-500 text-white{% else %}bg-white text-blue-500 border border-blue-500{% endif %}">
+                    class="py-2 px-4 rounded hover:bg-green-300
+                           {% if show_intersection %}bg-green-500 text-white{% else %}bg-white text-green-500 border border-green-500{% endif %}">
                     Show intersection points
                     </button>
 

@@ -1,34 +1,60 @@
+
 {% extends 'base.html' %}
-
 {% load static %}
-
 {% block title %}Plotter{% endblock %}
-
 {% block content %}
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=info" />
+
 
 <div class="plotterpage">
     <div class="flex justify-between m-6 ml-20 mr-20 h-4/5">
         <!-- Forms Section on the Left -->
         <div class="w-1/2 form_section rounded-lg mr-5 max-h-full">
-            <ul class="flex overflow-auto">
+            <ul class="flex justify-center mt-10">
                 <li>
                   <button
                     id="tab-points"
-                    class="tab-button m-3 rounded-lg px-4 py-3 bg-green-500 text-white hover:bg-gray-700 focus:outline-none"
+                    class="tab-button mr-3 rounded-lg px-4 py-3 bg-green-500 text-white hover:bg-gray-700 focus:outline-none"
                     onclick="switchTab('points')"
                   >
-                    Points
+                      Points
                   </button>
                 </li>
                 <li>
                   <button
                     id="tab-lines"
-                    class="tab-button m-3 rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                    class="tab-button mr-3 rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
                     onclick="switchTab('lines')"
                   >
                     Lines
                   </button>
                 </li>
+                <li>
+                  <button
+                    id="tab-func"
+                    class="tab-button mr-3 rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                    onclick="switchTab('func')"
+                  >
+                    Functions
+                  </button>
+                </li>
+                <div class="lg:justify-end flex ">
+                    <li>
+                  <button
+                    class="tab-button rounded-lg  mr-3 px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                  >
+                    Save project
+                  </button>
+                </li>
+                <li>
+                  <button id="download-plot-btn"
+                    class="tab-button rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                  >
+                    Download plot
+                  </button>
+                </li>
+                </div>
               </ul>
 
             <div id="points" class="tab-content"> 
@@ -38,6 +64,10 @@
             <div id="lines" class="tab-content hidden">
                 {% include 'plotter_sections/lines.html' %}
             </div>
+
+            <div id="func" class="tab-content hidden">
+                {% include 'plotter_sections/func.html' %}
+            </div>
         </div>
 
         <div class="w-1/2 flex-col justify-center rounded-lg ml-5 form_section max-h-full">
@@ -45,7 +75,7 @@
             <!-- Plotting Section -->
                 <div class="plot-container rounded-lg shadow-md w-full">
                     {% if plot_url %}
-                        <img class="max-w-full m-auto rounded-lg"
+                        <img id="current-plot" class="max-w-full m-auto rounded-lg"
                         src="{{ plot_url }}"
                         >
                     {% else %}
@@ -77,6 +107,23 @@
         background-color: #0F0F0F;
     }
 </style>
+
+<!--Download script-->
+<script>
+  document.getElementById('download-plot-btn').addEventListener('click', function() {
+    const plotImage = document.getElementById('current-plot');
+    if (plotImage && plotImage.src) {
+      const link = document.createElement('a');
+      link.href = plotImage.src;
+      link.download = 'plot.png';
+      link.click();
+    } else {
+      alert('Plot image not available');
+    }
+  });
+</script>
+
+<!--Tab switching and page loading script-->
 <script>
     function switchTab(tabId) {
       // Remove active state from all buttons and hide all tab content

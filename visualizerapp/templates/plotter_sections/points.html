@@ -8,12 +8,12 @@
                 {{ point_form.as_p }}
                 <br>
                 <div class="flex flex-col space-y-4">
-                    <button type="submit" name="add_point" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Point</button>
+                    <button type="submit" name="add_point" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add Point</button>
                     
                     <button 
                     type="submit" 
                     name="connect_points" 
-                    class="py-2 px-4 rounded hover:bg-green-500 
+                    class="py-2 px-4 rounded hover:bg-green-300
                            {% if connect_points %}bg-green-500 text-white{% else %}bg-white text-green-500 border border-green-500{% endif %}">
                     Connect points
                     </button>
