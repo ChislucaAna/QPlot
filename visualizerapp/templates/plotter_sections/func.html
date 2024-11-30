@@ -17,6 +17,14 @@
                 {% for p in functions %}
                     <li class="flex items-center space-x-2 text-white m-2">
                         <span>{{ p }}</span>
+
+                        <!--Delete button-->
+                        <form method="POST" action="{% url 'delete_function' forloop.counter0 %}">
+                            {% csrf_token %}
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700">
+                                    X
+                                </button>
+                        </form>
                     </li>
                 {% endfor %}
             </ul>

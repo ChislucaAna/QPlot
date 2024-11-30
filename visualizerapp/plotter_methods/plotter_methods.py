@@ -7,6 +7,7 @@ from visualizerapp.models.Lines import Line
 from visualizerapp.models.Points import Punct
 import matplotlib.pyplot as plt
 
+
 def config():
     fig = plt.figure()
     fig.set_size_inches(10, 7)
@@ -27,6 +28,7 @@ def config():
     plt.tick_params(axis='x', colors='white')  # X-axis ticks in white
     plt.tick_params(axis='y', colors='white')  # Y-axis ticks in white
 
+
 def plot_points(points,connect_points):
     if points:
         for p in points:
@@ -35,6 +37,7 @@ def plot_points(points,connect_points):
             xs = [p['x'] for p in points]
             ys = [p['y'] for p in points]
             plt.plot(xs, ys, color='gray', linestyle='--')
+
 
 def plot_lines(lines,show_intersection,show_middles):
     if lines:
@@ -69,6 +72,7 @@ def plot_lines(lines,show_intersection,show_middles):
                     intersectie = line1.intersectie(line2)
                     if intersectie:  # Ensure there is an intersection
                         plt.scatter(intersectie.x, intersectie.y, color='purple')
+
 
 def generate_plot_url(context_data):
     print("generating plot...")
