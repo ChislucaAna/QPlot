@@ -6,8 +6,8 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="flex items-center justify-center z-10 min-h-screen">
-    <section class="max-w-md w-full bg-black rounded-lg shadow-md p-8 space-y-6">
+<div class="flex items-start justify-center z-10 min-h-screen p-20">
+    <section class="max-w-md w-full bg-black rounded-lg shadow-md p-8 space-y-6 m-20">
         <h2 class="text-center text-3xl font-extrabold text-white">Log in</h2>
 
         <!--FORMULARUL DE LOGIN-->
@@ -29,7 +29,7 @@
             {% endfor %}
 
             <button type="submit"
-                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-500 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
                 Submit
             </button>
         </form>
@@ -50,7 +50,7 @@
         <div class="text-center mt-6">
             <p class="text-gray-600">Don't have an account?</p>
             <a href="{% url 'signup' %}"
-               class="text-indigo-600 font-medium hover:text-indigo-500 transition duration-150 ease-in-out">
+               class="text-green-600 font-medium hover:text-green-200 transition duration-150 ease-in-out">
                Create one now!
             </a>
         </div>

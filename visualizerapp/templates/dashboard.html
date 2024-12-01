@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <!-- Add your CSS or other styles here -->
-</head>
-<body>
+ {% extends 'base.html' %}
+{% load static %}
+{% block title %}QPlot{% endblock %}
 
-    <h1>Your Project Contexts</h1>
+{% block content %}
+<div class="container mx-auto p-6">
 
-    <!-- Check if there are any project contexts to display -->
-    {% if project_contexts %}
-        <div class="image-gallery">
-            {% for context in project_contexts %}
-                {% if context.context_data.plot_url %}
-                    <div class="image-item">
-                        <img src="{{ context.context_data.plot_url }}" alt="Project Image" class="project-image" />
+        <!-- Header -->
+        <h1 class="text-3xl font-semibold text-center mb-8">Your Project Contexts</h1>
+
+        <!-- Check if there are any project contexts -->
+        {% if project_contexts %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for context in project_contexts %}
+                    <div class="image-item bg-white shadow-lg rounded-lg overflow-hidden">
+                        <!-- Display image if plot_url is available -->
+                        {% if context.context_data.plot_url %}
+                            <img src="{{ context.context_data.plot_url }}" class="w-full h-64 object-cover">
+                        {% endif %}
                     </div>
-                {% else %}
-                    <p>No image available for this project context.</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No project contexts found for your account.</p>
-    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500 mt-4">No project contexts found for your account.</p>
+        {% endif %}
 
-</body>
-</html>
+ </div>
+ {% endblock %}
