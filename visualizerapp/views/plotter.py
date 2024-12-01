@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.http import HttpResponse
 # Forms for creating geometric elements
 from visualizerapp.forms import *
 from visualizerapp.models.Points import Punct
@@ -8,8 +9,9 @@ from visualizerapp.models.Lines import Line
 from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
 from visualizerapp.plotter_methods.plotter_methods import *
-from visualizerapp.views.delete import delete_line
-from visualizerapp.views.info import line_info
+from django.contrib.auth.decorators import login_required
+#model for saving plot into db
+from visualizerapp.models.project_context import ProjectContext
 
 class PlotView(View):
     def get(self, request, *args, **kwargs):
@@ -48,6 +50,8 @@ class PlotView(View):
             self.add_line(request,line_form,context_data)
         elif 'add_function' in request.POST:
             self.add_function(request,func_form,context_data)
+        elif 'save' in request.POST:
+            self.save_project(request)
 
         request.session.modified = True
         context = self.plot_and_update_context(request, point_form, line_form,func_form)
@@ -130,3 +134,13 @@ class PlotView(View):
             'plot_url': request.session.get('plot_url'),
             'line_info': request.session.get('line_info',{})
         }
+
+    def save_project(self, request):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        context_data = self.get_session_data(request)
+        # Save the data in the database
+        ProjectContext.objects.create(
+            user=request.user,
+            context_data=context_data)
+        print("project saved")

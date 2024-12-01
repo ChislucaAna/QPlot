@@ -12,6 +12,8 @@ href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wg
         <!-- Forms Section on the Left -->
         <div class="w-1/2 form_section rounded-lg mr-5 max-h-full">
             <ul class="flex justify-center mt-10">
+
+                <!--PLOTTING MENUS-->
                 <li>
                   <button
                     id="tab-points"
@@ -39,21 +41,29 @@ href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wg
                     Functions
                   </button>
                 </li>
+
+                <!--SAVING BUTTONS-->
                 <div class="lg:justify-end flex ">
+
+                    <!--Save project to dashboard-->
+                    <form method="POST">
+                        {% csrf_token %}
                     <li>
-                  <button
-                    class="tab-button rounded-lg  mr-3 px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
-                  >
-                    Save project
-                  </button>
-                </li>
-                <li>
-                  <button id="download-plot-btn"
-                    class="tab-button rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
-                  >
-                    Download plot
-                  </button>
-                </li>
+                        <button type="submit" name="save" class="tab-button rounded-lg mr-3 px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none">
+                            Save project
+                        </button>
+                    </li>
+                    </form>
+
+                    <!--Save plot image locally-->
+                    <li>
+                      <button id="download-plot-btn"
+                        class="tab-button rounded-lg px-4 py-3 bg-gray-700 text-white hover:bg-gray-700 focus:outline-none"
+                      >
+                        Download plot
+                      </button>
+                    </li>
+
                 </div>
               </ul>
 

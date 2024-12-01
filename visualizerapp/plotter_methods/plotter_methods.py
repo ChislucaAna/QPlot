@@ -1,11 +1,12 @@
 import matplotlib
-#Starting a Matplotlib GUI outside of the main thread will fail.
+#Starting a Matplotlib GUI outside the main thread will fail.
 matplotlib.use('Agg')
 import io
 import base64
 from visualizerapp.models.Lines import Line
 from visualizerapp.models.Points import Punct
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def config():
@@ -72,6 +73,16 @@ def plot_lines(lines,show_intersection,show_middles):
                     intersectie = line1.intersectie(line2)
                     if intersectie:  # Ensure there is an intersection
                         plt.scatter(intersectie.x, intersectie.y, color='purple')
+
+def plot_functions(functions):
+     function_list = [func.strip() for func in functions.split(',')]
+     for func in function_list:
+         x = np.linspace(-10, 10, 400)
+         try:
+             y = eval(func, {"x": x, "np": np})
+             plt.plot(x, y)
+         except Exception as e:
+             print(f"Error plotting function '{func}': {e}")
 
 
 def generate_plot_url(context_data):
