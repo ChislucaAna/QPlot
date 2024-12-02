@@ -16,6 +16,9 @@
                         <!-- Display image if plot_url is available -->
                         {% if context.context_data.plot_url %}
                             <img src="{{ context.context_data.plot_url }}" class="w-full h-64 object-cover">
+                                <a href="{% url 'plotter' %}?id={{ context.id }}"  class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    View Plotter
+                                </a>
                         {% endif %}
                     </div>
                 {% endfor %}

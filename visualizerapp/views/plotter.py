@@ -1,36 +1,30 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse
 # Forms for creating geometric elements
 from visualizerapp.forms import *
-from visualizerapp.models.Points import Punct
-from visualizerapp.models.Lines import Line
 #serializers
 from visualizerapp.serializers import PunctSerializer, LineSerializer
 #plotting methods:
 from visualizerapp.plotter_methods.plotter_methods import *
-from django.contrib.auth.decorators import login_required
 #model for saving plot into db
 from visualizerapp.models.project_context import ProjectContext
 
 class PlotView(View):
-    def get(self, request, *args, **kwargs):
-        #init session
-        self.initialize_session(request)
+    def get(self, request,*args, **kwargs):
+        id = request.GET.get('id')
+        print(id)
+        context_data = self.get_context_data(id)
+        self.initialize_session(request, context_data)
         point_form=PointForm()
         line_form=LineForm()
         func_form=FunctionForm()
-        #current session context for data load
-        context_data = self.get_session_data(request)
-        #plot
         context=self.plot_and_update_context(request,point_form,line_form,func_form)
         return render(request, 'plotter.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request,*args, **kwargs):
         point_form=PointForm(request.POST or None)
         line_form = LineForm(request.POST or None)
         func_form = FunctionForm(request.POST or None)
-
         context_data = self.get_session_data(request)
 
         #post requests:
@@ -111,17 +105,42 @@ class PlotView(View):
             'functions': context_data['functions']
         }
     
-    def initialize_session(self, request):
-        if 'points' not in request.session:
-            request.session['points'] = []
-        if 'lines' not in request.session:
-            request.session['lines'] = []
-        if 'functions' not in request.session:
-            request.session['functions'] = []
-        if 'line_info' not in request.session:
-            request.session['line_info'] = {}
+    def initialize_session(self, request,context_data=None):
+        if context_data:
+            request.session['connect_points'] = context_data.get('connect_points', False)
+            request.session['show_middles'] = context_data.get('show_middles', False)
+            request.session['show_intersection'] = context_data.get('show_intersection', False)
+            request.session['show_length'] = context_data.get('show_length', False)
+            request.session['show_slope'] = context_data.get('show_slope', False)
+            request.session['points'] = context_data.get('points', [])
+            request.session['lines'] = context_data.get('lines', [])
+            request.session['functions'] = context_data.get('functions', [])
+            request.session['line_info'] = context_data.get('line_info', {})
+            request.session['plot_url'] = context_data.get('plot_url', None)
+        else:
+            if 'points' not in request.session:
+                request.session['points'] = []
+            if 'lines' not in request.session:
+                request.session['lines'] = []
+            if 'functions' not in request.session:
+                request.session['functions'] = []
+            if 'line_info' not in request.session:
+                request.session['line_info'] = {}
 
-    def get_session_data(self, request):
+    def get_context_data(self, id):
+        # Fetch the context data for the project (if id is provided)
+        try:
+            project = ProjectContext.objects.get(id=id)
+            context_data = project.context_data
+        except ProjectContext.DoesNotExist:
+            print("aici esti")
+            context_data = None  # If the project doesn't exist, return None
+        return context_data
+
+    def get_session_data(self, request,id=None):
+        if id:
+            context_data = self.get_context_data(id)  # Fetch the project data based on the id
+            return context_data
         return {
             'connect_points': request.session.get('connect_points'),
             'show_middles': request.session.get('show_middles'),
@@ -140,7 +159,7 @@ class PlotView(View):
             return redirect('login')
         context_data = self.get_session_data(request)
         # Save the data in the database
-        ProjectContext.objects.create(
+        project_context =  ProjectContext.objects.create(
             user=request.user,
             context_data=context_data)
-        print("project saved")
+        print(f"Project saved with ID: {project_context.id}")

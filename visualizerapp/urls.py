@@ -9,7 +9,7 @@ from .views.info import line_info
 
 urlpatterns = [
     path('', home, name='home'),
-    path('plot/', PlotView.as_view(), name='plotter'),
+    path('plot/', PlotView.as_view(), name='plotter'), #atunci cand creezi proiect nou
     path('accounts/login/', auth_views.LoginView.as_view(next_page='/',template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('signup/',signup,name='signup'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('delete-point/<int:point_id>/', delete_point, name='delete_point'),
     path('delete-function/<int:function_id>/', delete_function, name='delete_function'),
     path('line_info/<int:line_id>/', line_info, name='line_info'),
+    path('plotter/<int:id>/', PlotView.as_view(), name='plotter_with_id'), #atunci cand accesezi din projects vrei sa ai context
 ]
