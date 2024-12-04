@@ -4,28 +4,37 @@
 
 {% block content %}
 <div class="container mx-auto p-6">
-
-        <!-- Header -->
-        <h1 class="text-3xl font-semibold text-center mb-8">Your Project Contexts</h1>
-
         <!-- Check if there are any project contexts -->
         {% if project_contexts %}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {% for context in project_contexts %}
-                    <div class="image-item bg-white shadow-lg rounded-lg overflow-hidden">
-                        <!-- Display image if plot_url is available -->
-                        {% if context.context_data.plot_url %}
-                            <img src="{{ context.context_data.plot_url }}" class="w-full h-64 object-cover">
-                                <a href="{% url 'plotter' %}?id={{ context.id }}"  class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                    View Plotter
-                                </a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+        {% for context in project_contexts %}
+            <div class="obj-container image-item rounded-lg overflow-hidden flex flex-col items-center">
+                <!-- Display image if plot_url is available -->
+                {% if context.context_data.plot_url %}
+                    <img src="{{ context.context_data.plot_url }}" class="m-4 w-5/6 object-cover">
+                    <a href="{% url 'plotter' %}?id={{ context.id }}" class="view m-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                        View project
+                    </a>
+                {% endif %}
             </div>
+        {% endfor %}
+</div>
         {% else %}
             <p class="text-center text-gray-500 mt-4">No project contexts found for your account.</p>
         {% endif %}
 
  </div>
+
+ <style>
+     .view
+     {
+        background-color:#009936;
+     }
+
+     .obj-container {
+    background-color: rgb(11, 11, 11);  /* Set the background color */
+    border: 1px solid whitesmoke;  /* Add a 2px solid gray border */
+}
+
+ </style>
  {% endblock %}
