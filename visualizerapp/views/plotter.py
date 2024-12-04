@@ -12,19 +12,20 @@ from visualizerapp.models.project_context import ProjectContext
 class PlotView(View):
     def get(self, request,*args, **kwargs):
         id = request.GET.get('id')
-        print(id)
         context_data = self.get_context_data(id)
         self.initialize_session(request, context_data)
         point_form=PointForm()
         line_form=LineForm()
         func_form=FunctionForm()
-        context=self.plot_and_update_context(request,point_form,line_form,func_form)
+        config_form=ConfigForm()
+        context=self.plot_and_update_context(request,point_form,line_form,func_form,config_form)
         return render(request, 'plotter.html', context)
 
     def post(self, request,*args, **kwargs):
         point_form=PointForm(request.POST or None)
         line_form = LineForm(request.POST or None)
         func_form = FunctionForm(request.POST or None)
+        config_form = ConfigForm(request.POST or None)
         context_data = self.get_session_data(request)
 
         #post requests:
@@ -48,7 +49,7 @@ class PlotView(View):
             self.save_project(request)
 
         request.session.modified = True
-        context = self.plot_and_update_context(request, point_form, line_form,func_form)
+        context = self.plot_and_update_context(request, point_form, line_form, func_form, config_form)
         return render(request, 'plotter.html', context)
 
     def add_point(self,request,point_form,context_data):
@@ -81,14 +82,14 @@ class PlotView(View):
         else:
             print("invalid form")
 
-    def plot_and_update_context(self, request, point_form, line_form, func_form):
+    def plot_and_update_context(self, request, point_form, line_form, func_form,config_form):
         request.session['plot_url'] = generate_plot_url(self.get_session_data(request))
         # update context post-plot
         context_data = self.get_session_data(request)
-        context = self.create_context(request, point_form, line_form,func_form, context_data)
+        context = self.create_context(request, point_form, line_form,func_form, config_form,context_data)
         return context
 
-    def create_context(self, request, point_form, line_form,func_form, context_data):
+    def create_context(self, request, point_form, line_form,func_form,config_form, context_data):
         return {
             'connect_points': context_data['connect_points'],
             'show_middles': context_data['show_middles'],
@@ -97,7 +98,8 @@ class PlotView(View):
             'show_slope': context_data['show_slope'],
             'line_form': line_form,
             'point_form': point_form,
-            'func_form':func_form,
+            'func_form': func_form,
+            'config_form': config_form,
             'plot_url': context_data['plot_url'],
             'points': context_data['points'],
             'lines': context_data['lines'],
@@ -133,8 +135,7 @@ class PlotView(View):
             project = ProjectContext.objects.get(id=id)
             context_data = project.context_data
         except ProjectContext.DoesNotExist:
-            print("aici esti")
-            context_data = None  # If the project doesn't exist, return None
+            context_data = None
         return context_data
 
     def get_session_data(self, request,id=None):

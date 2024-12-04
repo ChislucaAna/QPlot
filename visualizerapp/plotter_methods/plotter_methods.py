@@ -75,14 +75,20 @@ def plot_lines(lines,show_intersection,show_middles):
                         plt.scatter(intersectie.x, intersectie.y, color='purple')
 
 def plot_functions(functions):
-     function_list = [func.strip() for func in functions.split(',')]
-     for func in function_list:
-         x = np.linspace(-10, 10, 400)
-         try:
-             y = eval(func, {"x": x, "np": np})
-             plt.plot(x, y)
-         except Exception as e:
-             print(f"Error plotting function '{func}': {e}")
+    if isinstance(functions, list):
+        function_list = [func.strip() for func in functions]
+    else:
+        print("Error: functions should be either a comma-separated string or a list.")
+        return
+
+    x = np.linspace(-10, 10, 400)
+
+    for func in function_list:
+        try:
+            y = eval(func, {"x": x, "np": np})
+            plt.plot(x, y, label=func)
+        except Exception as e:
+            print(f"Error plotting function '{func}': {e}")
 
 
 def generate_plot_url(context_data):
@@ -92,6 +98,7 @@ def generate_plot_url(context_data):
     config()
     plot_points(context_data['points'], context_data['connect_points'])
     plot_lines(context_data['lines'], context_data['show_intersection'], context_data['show_middles'])
+    plot_functions(context_data['functions'])
     try:
         plt.savefig(buf, format='png')
         buf.seek(0)

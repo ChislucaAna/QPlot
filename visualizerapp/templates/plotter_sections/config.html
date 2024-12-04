@@ -1,0 +1,41 @@
+<div class="container p-6 w-full">
+    <div class="flex justify-between w-full">
+        <!-- Form Section -->
+        <div class="form-container p-6 rounded-lg shadow-md w-full point_menu">
+            <h2 class="text-xl text-white font-semibold mb-2">Configure plot range</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ config_form.as_p }}
+                <br>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit" name="add_function" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Apply settings</button>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    input {
+    border: 0.1px solid #535353;
+    border-radius: 8px;
+    padding:2px;
+    margin:2px;
+}
+
+    input[type=number]{
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    .point_menu
+    {
+        background-color: transparent;
+    }
+
+    label
+    {
+        color: white;
+    }
+</style>
