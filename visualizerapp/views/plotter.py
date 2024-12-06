@@ -47,6 +47,8 @@ class PlotView(View):
             self.add_function(request,func_form,context_data)
         elif 'save' in request.POST:
             self.save_project(request)
+        elif 'settings_changed' in request.POST:
+            self.modify_settings(request,config_form,context_data)
 
         request.session.modified = True
         context = self.plot_and_update_context(request, point_form, line_form, func_form, config_form)
@@ -104,6 +106,7 @@ class PlotView(View):
             'points': context_data['points'],
             'lines': context_data['lines'],
             'line_info': context_data['line_info'],
+            'settings': context_data['settings'],
             'functions': context_data['functions']
         }
     
@@ -118,6 +121,7 @@ class PlotView(View):
             request.session['lines'] = context_data.get('lines', [])
             request.session['functions'] = context_data.get('functions', [])
             request.session['line_info'] = context_data.get('line_info', {})
+            request.session['settings'] = context_data.get('settings', {})
             request.session['plot_url'] = context_data.get('plot_url', None)
         else:
             if 'points' not in request.session:
@@ -152,7 +156,8 @@ class PlotView(View):
             'lines': request.session.get('lines', []),
             'functions':request.session.get('functions',[]),
             'plot_url': request.session.get('plot_url'),
-            'line_info': request.session.get('line_info',{})
+            'line_info': request.session.get('line_info',{}),
+            'settings': request.session.get('settings', {}),
         }
 
     def save_project(self, request):
@@ -160,7 +165,17 @@ class PlotView(View):
             return redirect('login')
         context_data = self.get_session_data(request)
         # Save the data in the database
-        project_context =  ProjectContext.objects.create(
+        project_context = ProjectContext.objects.create(
             user=request.user,
             context_data=context_data)
         print(f"Project saved with ID: {project_context.id}")
+
+    def modify_settings(self,request,config_form,context_data):
+            if config_form.is_valid():
+                settings = request.session.get('settings', {})
+                settings["startx"] = config_form.cleaned_data['startx']
+                settings["endx"] = config_form.cleaned_data['endx']
+                print(request.session.get('settings', {}))
+            else:
+                print("invalid form")
+

@@ -19,5 +19,5 @@ class FunctionForm(forms.Form):
     function = forms.CharField(label='f(x)', max_length=100, required=False)
 
 class ConfigForm(forms.Form):
-    LeftLimit = forms.FloatField(label='Left X', required=False)
-    RightLimit = forms.FloatField(label='Right X', required=False)
+    startx = forms.FloatField(label='Left X', required=False)
+    endx = forms.FloatField(label='Right X', required=False)

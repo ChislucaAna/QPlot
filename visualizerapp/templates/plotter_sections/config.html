@@ -2,13 +2,13 @@
     <div class="flex justify-between w-full">
         <!-- Form Section -->
         <div class="form-container p-6 rounded-lg shadow-md w-full point_menu">
-            <h2 class="text-xl text-white font-semibold mb-2">Configure plot range</h2>
+            <h2 class="text-xl text-white font-semibold mb-2">Plot range:</h2>
             <form method="post" class="mb-4">
                 {% csrf_token %}
                 {{ config_form.as_p }}
                 <br>
                 <div class="flex flex-col space-y-4">
-                    <button type="submit" name="add_function" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Apply settings</button>
+                    <button type="submit" name="settings_changed" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Apply settings</button>
                 </div>
                 <br>
             </form>

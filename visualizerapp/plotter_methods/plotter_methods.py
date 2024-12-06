@@ -74,14 +74,16 @@ def plot_lines(lines,show_intersection,show_middles):
                     if intersectie:  # Ensure there is an intersection
                         plt.scatter(intersectie.x, intersectie.y, color='purple')
 
-def plot_functions(functions):
+
+def plot_functions(functions, settings):
+
     if isinstance(functions, list):
         function_list = [func.strip() for func in functions]
     else:
         print("Error: functions should be either a comma-separated string or a list.")
         return
 
-    x = np.linspace(-10, 10, 400)
+    x = np.linspace(settings['startx'], settings['endx'], 400)
 
     for func in function_list:
         try:
@@ -98,7 +100,7 @@ def generate_plot_url(context_data):
     config()
     plot_points(context_data['points'], context_data['connect_points'])
     plot_lines(context_data['lines'], context_data['show_intersection'], context_data['show_middles'])
-    plot_functions(context_data['functions'])
+    plot_functions(context_data['functions'],context_data['settings'])
     try:
         plt.savefig(buf, format='png')
         buf.seek(0)

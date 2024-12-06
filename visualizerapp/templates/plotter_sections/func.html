@@ -12,6 +12,20 @@
                 </div>
                 <br>
             </form>
+
+            <br>
+
+            <h2 class="text-xl text-white font-semibold mb-2">Plot Function between:</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ config_form.as_p }}
+                <br>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit" name="settings_changed" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Apply settings</button>
+                </div>
+                <br>
+            </form>
+
             <h3 class="text-lg font-semibold mb-2 text-white">Functions Added:</h3>
             <ul class="list-disc pl-5">
                 {% for p in functions %}
