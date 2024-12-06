@@ -48,7 +48,7 @@ class PlotView(View):
         elif 'save' in request.POST:
             self.save_project(request)
         elif 'settings_changed' in request.POST:
-            self.modify_settings(request,config_form,context_data)
+            self.modify_settings(request, config_form)
 
         request.session.modified = True
         context = self.plot_and_update_context(request, point_form, line_form, func_form, config_form)
@@ -170,11 +170,12 @@ class PlotView(View):
             context_data=context_data)
         print(f"Project saved with ID: {project_context.id}")
 
-    def modify_settings(self,request,config_form,context_data):
+    def modify_settings(self,request,config_form):
             if config_form.is_valid():
                 settings = request.session.get('settings', {})
                 settings["startx"] = config_form.cleaned_data['startx']
                 settings["endx"] = config_form.cleaned_data['endx']
+                settings["nr_of_points"] = config_form.cleaned_data['nr_of_points']
                 print(request.session.get('settings', {}))
             else:
                 print("invalid form")

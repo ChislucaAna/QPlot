@@ -83,7 +83,7 @@ def plot_functions(functions, settings):
         print("Error: functions should be either a comma-separated string or a list.")
         return
 
-    x = np.linspace(settings['startx'], settings['endx'], 400)
+    x = np.linspace(settings['startx'], settings['endx'], settings['nr_of_points'])
 
     for func in function_list:
         try:

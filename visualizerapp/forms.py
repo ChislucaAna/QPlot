@@ -21,3 +21,4 @@ class FunctionForm(forms.Form):
 class ConfigForm(forms.Form):
     startx = forms.FloatField(label='Left X', required=False)
     endx = forms.FloatField(label='Right X', required=False)
+    nr_of_points = forms.IntegerField(label ='Number of points', required=False)
