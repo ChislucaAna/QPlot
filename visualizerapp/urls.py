@@ -4,7 +4,7 @@ from .views.homepage import home
 from .views.dashboard import dashboard
 from .views.signup import signup
 from .views.plotter import PlotView
-from .views.delete import delete_line,delete_point,delete_function
+from .views.delete import *
 from .views.info import line_info
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path('delete-line/<int:line_id>/', delete_line, name='delete_line'),
     path('delete-point/<int:point_id>/', delete_point, name='delete_point'),
     path('delete-function/<int:function_id>/', delete_function, name='delete_function'),
+    path('delete-project/<int:project_id>/', delete_project, name='delete_project'),
     path('line_info/<int:line_id>/', line_info, name='line_info'),
     path('plotter/<int:id>/', PlotView.as_view(), name='plotter_with_id'), #atunci cand accesezi din projects vrei sa ai context
 ]

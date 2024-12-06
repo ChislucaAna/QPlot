@@ -11,10 +11,23 @@
             <div class="obj-container image-item rounded-lg overflow-hidden flex flex-col items-center">
                 <!-- Display image if plot_url is available -->
                 {% if context.context_data.plot_url %}
+
                     <img src="{{ context.context_data.plot_url }}" class="m-4 w-5/6 object-cover">
-                    <a href="{% url 'plotter' %}?id={{ context.id }}" class="view m-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                        View project
-                    </a>
+
+                    <div class="rounded-lg overflow-hidden flex flex-row items-center m-4">
+
+                        <a href="{% url 'plotter' %}?id={{ context.id }}" class="view m-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                            View project
+                        </a>
+
+                        <form method="POST" action="{% url 'delete_project' project_id=context.id %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-red-500 text-white rounded hover:bg-red-700 inline-block px-4 py-2">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+
                 {% endif %}
             </div>
         {% endfor %}

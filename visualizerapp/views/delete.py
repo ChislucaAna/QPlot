@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, get_object_or_404, render
+from visualizerapp.models.project_context import ProjectContext
 
 def delete_line(request, line_id):
     if request.method == 'POST':
@@ -25,4 +26,10 @@ def delete_function(request, function_id):
         request.session['functions'] = functions
         request.session.modified = True
         return redirect('plotter')
+
+def delete_project(request, project_id):
+    if request.method == 'POST':
+        project_context = get_object_or_404(ProjectContext, id=project_id, user=request.user)
+        project_context.delete()
+        return redirect('dashboard')
 
