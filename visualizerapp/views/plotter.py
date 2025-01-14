@@ -26,7 +26,7 @@ class PlotView(View):
         line_form = LineForm(request.POST or None)
         func_form = FunctionForm(request.POST or None)
         config_form = ConfigForm(request.POST or None)
-        context_data = self.get_session_data(request)
+        context_data = self.get_session_data(request) or {}
 
         #post requests:
         if 'connect_points' in request.POST:
@@ -45,7 +45,8 @@ class PlotView(View):
             self.add_line(request,line_form,context_data)
         elif 'add_function' in request.POST:
             self.add_function(request,func_form,context_data)
-        elif 'save' in request.POST:
+        if 'save' in request.POST:
+            print("request for saving was made")
             self.save_project(request)
         elif 'settings_changed' in request.POST:
             self.modify_settings(request, config_form)
@@ -132,6 +133,8 @@ class PlotView(View):
                 request.session['functions'] = []
             if 'line_info' not in request.session:
                 request.session['line_info'] = {}
+            if 'settings' not in request.session:
+                request.session['settings']={}
 
     def get_context_data(self, id):
         # Fetch the context data for the project (if id is provided)
@@ -161,6 +164,7 @@ class PlotView(View):
         }
 
     def save_project(self, request):
+        print("Saving project...")
         if not request.user.is_authenticated:
             return redirect('login')
         context_data = self.get_session_data(request)
@@ -176,7 +180,6 @@ class PlotView(View):
                 settings["startx"] = config_form.cleaned_data['startx']
                 settings["endx"] = config_form.cleaned_data['endx']
                 settings["nr_of_points"] = config_form.cleaned_data['nr_of_points']
-                print(request.session.get('settings', {}))
             else:
                 print("invalid form")
 

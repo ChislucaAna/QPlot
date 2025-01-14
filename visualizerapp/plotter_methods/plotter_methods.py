@@ -83,14 +83,18 @@ def plot_functions(functions, settings):
         print("Error: functions should be either a comma-separated string or a list.")
         return
 
-    x = np.linspace(settings['startx'], settings['endx'], settings['nr_of_points'])
+    try:  # This checks if settings is not None, empty, or any other falsy value
+        x = np.linspace(settings['startx'], settings['endx'], settings['nr_of_points'])
 
-    for func in function_list:
-        try:
-            y = eval(func, {"x": x, "np": np})
-            plt.plot(x, y, label=func)
-        except Exception as e:
-            print(f"Error plotting function '{func}': {e}")
+        for func in function_list:
+            try:
+                y = eval(func, {"x": x, "np": np})
+                plt.plot(x, y, label=func)
+            except Exception as e:
+                print(f"Error plotting function '{func}': {e}")
+    except Exception as e:
+        print(f"Error saving plot: {e}")
+        return None
 
 
 def generate_plot_url(context_data):
