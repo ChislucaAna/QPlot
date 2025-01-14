@@ -1,20 +1,15 @@
 🌐 QPlot
 
-QPlot is a web application developed using Django that allows users to plot various geometric elements, including points, lines, triangles, and other polygons. With an intuitive interface, users can create, visualize, and manage their geometric plots seamlessly. The app also offers user accounts, enabling the option to save plots either to a personal account or locally.
-![image](https://github.com/user-attachments/assets/e42322e6-ddb0-40ea-b2fa-102e9491f199)
-![image](https://github.com/user-attachments/assets/136eb181-46c4-42a4-9170-247968ccedbc)
-![image](https://github.com/user-attachments/assets/91c80f2b-e23a-4b90-9c19-1112be55d4ac)
-![image](https://github.com/user-attachments/assets/07899f00-2482-4b56-95c7-53ec722ef31f)
-![image](https://github.com/user-attachments/assets/3f97ef7d-1855-4367-a8f4-110bf4a27ffa)
+QPlot is a web application developed using Django that allows users to plot various geometric elements, including points, lines, triangles, and other polygons or different kind of functions. With an intuitive interface, users can create, visualize, and manage their geometric plots seamlessly. The app also offers user accounts, enabling the option to save plots either to a personal account or locally.
+![Screenshot from 2025-01-14 20-03-46](https://github.com/user-attachments/assets/38af7af1-0f44-465f-9b66-d2edd10c113d)
 
+![Screenshot from 2025-01-14 20-20-44](https://github.com/user-attachments/assets/46a130da-5a57-4d00-9d1a-a29e7ba90698)
 
-✨ Features
+![Screenshot from 2025-01-14 20-23-03](https://github.com/user-attachments/assets/924c627a-7679-4c6b-a1d4-47306ac1a3fa)
 
-    Geometric Plotting: Create plots with points, lines, triangles, and polygons.
-    User Accounts: Sign up to save your plots online for future reference.
-    Local Plot Storage: Download and save your plots locally.
-    Interactive Visualizations: Use Matplotlib for precise plotting and rich visuals.
-    Intuitive Forms: User-friendly forms for easy plot creation.
+![Screenshot from 2025-01-14 20-50-06](https://github.com/user-attachments/assets/26c35ca2-dacf-4298-bbe8-8ac8ddd073ed)
+
+![Screenshot from 2025-01-14 20-56-17](https://github.com/user-attachments/assets/330e56cc-e84b-4a33-b9b7-e58153ce28b3)
 
 ⚙️ Technologies Used
 
